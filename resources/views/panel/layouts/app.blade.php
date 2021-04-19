@@ -11,6 +11,7 @@
 
 <head>
 
+    @include('panel.layouts.meta')
     <link rel="apple-touch-icon" href="{{ asset('assets/panel/images/ico/apple-icon-120.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/panel/images/ico/favicon.ico') }}">
 
