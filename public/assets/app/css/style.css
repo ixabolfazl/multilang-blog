@@ -1,11 +1,11 @@
-@import "Vazir-FD.css";
+@import "Vazir.css";
 @import "https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i&display=swap";
 @import "https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700,800,900&display=swap";
 
 body {
     padding: 0;
     margin: 0;
-    font-family: vazir-fd, sans-serif;
+    font-family: vazir, sans-serif;
     font-size: 15px
 }
 
