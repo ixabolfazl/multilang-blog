@@ -21,7 +21,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 a {
@@ -286,7 +286,7 @@ p:last-child {
 .sinmun-nav {
     background: 0 0;
     padding-top: 15px;
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 .sinmun-nav nav {
@@ -2841,7 +2841,7 @@ p:last-child {
     -ms-flex-preferred-size: 65%;
     flex-basis: 65%;
     max-width: 65%;
-    padding: 30px
+    padding: 0
 }
 
 .blog-box .posts-content .cat a {
@@ -2904,14 +2904,14 @@ p:last-child {
 }
 
 .blog-box .posts-content p {
-    margin-bottom: 20px
+    margin-bottom: 5px
 }
 
 .blog-box .posts-content .read-more-btn {
     display: inline-block;
     position: relative;
     color: #d72924;
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 .blog-box .posts-content .read-more-btn span {
@@ -3916,7 +3916,7 @@ p:last-child {
     color: #232323;
     padding-left: 17px;
     line-height: 1.5;
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 .widget-area .widget ul li:last-child {
@@ -4279,7 +4279,7 @@ blockquote p {
 blockquote cite {
     position: relative;
     padding-left: 17px;
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 blockquote cite::before {
@@ -4441,7 +4441,7 @@ blockquote cite::before {
 }
 
 .comments-area .comment-author .fn {
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 .comments-area .comment-author .says {
@@ -4854,7 +4854,7 @@ blockquote cite::before {
 }
 
 .coming-soon-content #timer {
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 .coming-soon-content #timer div {
@@ -5390,7 +5390,7 @@ blockquote cite::before {
 
 .contact-form form .with-errors {
     margin-top: 10px;
-    font-family: vazir-fd, sans-serif
+    font-family: vazir, sans-serif
 }
 
 .contact-form form .with-errors ul li {
