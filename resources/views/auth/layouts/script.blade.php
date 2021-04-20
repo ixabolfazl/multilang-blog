@@ -3,6 +3,7 @@
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
+<script src="{{ asset('assets/panel/vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
 @yield('vendor-script')
 <!-- END: Page Vendor JS-->
 

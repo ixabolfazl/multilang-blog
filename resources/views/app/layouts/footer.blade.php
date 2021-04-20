@@ -18,11 +18,7 @@
                     <div class="connect-social">
                         <p>ما را دنبال کنید ، با ما در ارتباط باشید:</p>
                         <ul>
-                            <li><a href="index.htm#" target="_blank"><i class="icofont-facebook"></i></a></li>
-                            <li><a href="index.htm#" target="_blank"><i class="icofont-twitter"></i></a></li>
-                            <li><a href="index.htm#" target="_blank"><i class="icofont-linkedin"></i></a></li>
-                            <li><a href="index.htm#" target="_blank"><i class="icofont-instagram"></i></a></li>
-                            <li><a href="index.htm#" target="_blank"><i class="icofont-rss"></i></a></li>
+                            @include('app.layouts.social')
                         </ul>
                     </div>
                 </div>

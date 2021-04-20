@@ -14,3 +14,4 @@ yarn-error.log
 .idea/*
 /public/assets/app/img/
 /public/assets/panel/images/
+/public/assets/img/
