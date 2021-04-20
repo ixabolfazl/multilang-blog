@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if (app()->getLocale() == 'fa') {
+            $lang = 'rtl';
+        } else {
+            $lang = 'ltr';
+        }
+        view()->share('lang', $lang);
     }
 }
