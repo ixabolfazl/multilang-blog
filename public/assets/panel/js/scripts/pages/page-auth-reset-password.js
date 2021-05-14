@@ -27,13 +27,16 @@ $(function () {
         $(element).valid();
       }, */
       rules: {
-        'reset-password-new': {
-          required: true
-        },
-        'reset-password-confirm': {
-          required: true,
-          equalTo: '#reset-password-new'
-        }
+          'email': {
+              required: true
+          },
+          'password': {
+              required: true
+          },
+          'password_confirmation': {
+              required: true,
+              equalTo: '#password'
+          }
       }
     });
   }
