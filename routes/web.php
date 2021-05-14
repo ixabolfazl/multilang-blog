@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::localized(function () {
+
+
+    require __DIR__ . '/auth.php';
+
+
+    Route::get('/', function () {
+        return view('app.index');
+    });
+
+    Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
+
+        Route::get('/', [DashboardController::class, 'index'])->name('register');
+
+
+    });
+
+
 });
