@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 
-<html class="loading" lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-textdirection="{{ $lang }}">
+<html class="loading" lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-textdirection="{{ app()->getLocale()=='fa'? 'rtl':'ltr' }}">
 <!-- BEGIN: Head-->
 <head>
     @include('panel.layouts.meta')
@@ -12,8 +12,7 @@
 </head>
 <!-- END: Head-->
 <!-- BEGIN: Body-->
-<body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static  " data-open="click"
-      data-menu="vertical-menu-modern" data-col="blank-page">
+<body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
 <!-- BEGIN: Content-->
 @yield('content')
 <!-- END: Content-->
