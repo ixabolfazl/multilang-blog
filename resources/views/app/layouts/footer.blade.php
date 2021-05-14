@@ -1,3 +1,4 @@
+
 <footer class="footer-area">
     <div class="container">
         <div class="row">
@@ -104,13 +105,7 @@
                             Hadian</a></p>
                 </div>
                 <div class="col-lg-6 col-md-12">
-                    <ul class="footer-nav">
-                        <li><a href="index.htm#">صفحه اصلی</a></li>
-                        <li><a href="index.htm#">وبلاگ</a></li>
-                        <li><a href="index.htm#">انجمن</a></li>
-                        <li><a href="index.htm#">تماس با ما</a></li>
-                        <li><a href="index.htm#">تبلیغات</a></li>
-                    </ul>
+                    @include('app.layouts.footer-menu')
                 </div>
             </div>
         </div>

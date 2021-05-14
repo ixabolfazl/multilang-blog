@@ -37,7 +37,7 @@
                 <nav class="navbar navbar-expand-md navbar-light">
                     <a class="navbar-brand" href="index.html"><img src="{{ asset('assets/app/img/logo.png') }}"
                                                                    alt="logo"></a>
-                    @include('app.layouts.topmenu')
+                    @include('app.layouts.top-menu')
                 </nav>
             </div>
         </div>

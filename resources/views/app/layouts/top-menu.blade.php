@@ -13,37 +13,25 @@
             </ul>
         </li>
         <li class="nav-item"><a href="post-category-2.html" class="nav-link">سبک زندگی</a></li>
-        <li class="nav-item"><a href="post-category-1.html" class="nav-link">فناوری</a></li>
-        <li class="nav-item"><a href="post-category-5.html" class="nav-link">فیلم ها</a></li>
         <li class="nav-item"><a href="post-category-3.html" class="nav-link">مسافرت</a></li>
         <li class="nav-item"><a href="index.htm#" class="nav-link">صفحات</a>
             <ul class="dropdown-menu">
                 <li class="nav-item"><a href="index.htm#" class="nav-link">کلاس دسته بندی</a>
                     <ul class="dropdown-menu">
-                        <li class="nav-item"><a href="post-category-1.html" class="nav-link">دسته
-                                بندی 1</a></li>
-                        <li class="nav-item"><a href="post-category-2.html" class="nav-link">دسته
-                                بندی 2</a></li>
-                        <li class="nav-item"><a href="post-category-3.html" class="nav-link">دسته
-                                بندی 3</a></li>
-                        <li class="nav-item"><a href="post-category-4.html" class="nav-link">دسته
-                                بندی 4</a></li>
-                        <li class="nav-item"><a href="post-category-5.html" class="nav-link">دسته
-                                بندی 5</a></li>
-                        <li class="nav-item"><a href="post-category-6.html" class="nav-link">دسته
-                                بندی 6</a></li>
+                        <li class="nav-item"><a href="post-category-1.html" class="nav-link">دسته بندی 1</a></li>
+                        <li class="nav-item"><a href="post-category-2.html" class="nav-link">دسته بندی 2</a></li>
+                        <li class="nav-item"><a href="post-category-3.html" class="nav-link">دسته بندی 3</a></li>
+                        <li class="nav-item"><a href="post-category-4.html" class="nav-link">دسته بندی 4</a></li>
+                        <li class="nav-item"><a href="post-category-5.html" class="nav-link">دسته بندی 5</a></li>
+                        <li class="nav-item"><a href="post-category-6.html" class="nav-link">دسته بندی 6</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a href="index.htm#" class="nav-link">کلاس پست ها</a>
                     <ul class="dropdown-menu">
-                        <li class="nav-item"><a href="single-post-1.html" class="nav-link">پست
-                                جداگانه 1</a></li>
-                        <li class="nav-item"><a href="single-post-2.html" class="nav-link">پست
-                                جداگانه 2</a></li>
-                        <li class="nav-item"><a href="single-post-3.html" class="nav-link">پست
-                                جداگانه 3</a></li>
-                        <li class="nav-item"><a href="single-post-4.html" class="nav-link">پست
-                                جداگانه 4</a></li>
+                        <li class="nav-item"><a href="single-post-1.html" class="nav-link">پست جداگانه 1</a></li>
+                        <li class="nav-item"><a href="single-post-2.html" class="nav-link">پست جداگانه 2</a></li>
+                        <li class="nav-item"><a href="single-post-3.html" class="nav-link">پست جداگانه 3</a></li>
+                        <li class="nav-item"><a href="single-post-4.html" class="nav-link">پست جداگانه 4</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a href="index.htm#" class="nav-link">نمایشگاه</a>
@@ -63,23 +51,39 @@
                 </li>
             </ul>
         </li>
+        @auth
+            <li class="nav-item">
+                <a href="index.htm#" class="nav-link"><i class="icofont-user-alt-5"></i> {{ auth()->user()->name }}</a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item"><a href="gallery-1.html" class="nav-link">پروفایل</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit()" class="nav-link">خروج</a>
+                        </form>
 
-        <li class="nav-item text-danger"><a href="index.htm#" class="nav-link">{{ $lang=="rtl"? 'فارسی' :'EN' }} <img
-                    src="{{ $lang=="rtl"? asset('assets/app/img/flag/ir.png') :asset('assets/app/img/flag/us.png') }}"
-                    alt="{{ $lang=="rtl"? 'ir' :'us' }}-flag"></a>
-            <ul class="dropdown-menu">
-                <li class="nav-item"><a href="contact.html" class="nav-link">{{ $lang=="ltr"? 'EN' :'فارسی' }} <img
-                            src="{{ $lang=="rtl"? asset('assets/app/img/flag/ir.png') :asset('assets/app/img/flag/us.png') }}"
-                            alt="{{ $lang=="rtl"? 'ir' :'us' }}-flag"></a></li>
-                <li class="nav-item"><a href="author.html" class="nav-link">{{ $lang=="ltr"? 'فارسی' :'EN' }} <img
-                            src="{{ $lang=="ltr"? asset('assets/app/img/flag/ir.png') :asset('assets/app/img/flag/us.png') }}"
-                            alt="{{ $lang=="ltr"? 'ir' :'us' }}-flag"></a></li>
-            </ul>
-        </li>
+                    </li>
+                </ul>
+            </li>
+        @endauth
+        @guest
+            <li class="nav-item">
+                <a href="{{ route('register') }}" class="nav-link"><i class="icofont-user-alt-5"></i> ثبت نام</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('login') }}" class="nav-link"><i class="icofont-user-alt-5"></i> ورود</a>
+            </li>
+        @endguest
+
+
     </ul>
     <div class="others-options">
         <ul>
-            <li><a href="login.html"><i class="icofont-user-alt-5"></i></a></li>
+            <li class="nav-item text-danger">
+                <a href="{{ Route::localizedUrl(app()->getLocale()=='fa'? 'en' :'fa') }}" title="{{ app()->getLocale()=='fa' ? 'فارسی' :'English' }}" class="nav-link">
+                    <img src="{{ app()->getLocale()=='en' ? asset('assets/app/img/flag/us.png') :asset('assets/app/img/flag/ir.png') }}" alt="{{ app()->getLocale()=='en' ? 'en' :'fa' }}-flag"></a>
+            </li>
 
             <li class="header-search">
                 <div class="nav-search">
