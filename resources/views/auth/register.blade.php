@@ -20,8 +20,8 @@
                                 <form class="auth-register-form mt-2" action="{{ route('register.store') }}" method="POST">
                                     @csrf
                                     <x-admin.input name="name" label="Name" placeholder="john doe" tabindex="1"/>
-                                    <x-admin.input name="email" label="Email" placeholder="john@example.com" tabindex="2"/>
-                                    <x-admin.input name="phone" label="Phone" placeholder="Phone" placeholder="09123456789" tabindex="3"/>
+                                    <x-admin.input name="email" label="Email" placeholder="Email" tabindex="2"/>
+                                    <x-admin.input name="phone" label="Phone" placeholder="Phone" tabindex="3"/>
                                     <x-admin.input name="password" label="Password" placeholder="Password" tabindex="4" type="password"/>
                                     <x-admin.input name="password_confirmation" label="Confirm Password" placeholder="Confirm Password" tabindex="5" type="password"/>
                                     <button class="btn btn-primary btn-block" type="submit" tabindex="5">Sign up</button>

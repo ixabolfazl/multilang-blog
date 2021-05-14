@@ -17,7 +17,8 @@
                                 <h4 class="card-title mb-1">Welcome to Vuexy! 👋</h4>
                                 <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
 
-                                <form class="auth-login-form mt-2" action="{{ route('login.sotre') }}" method="POST">
+
+                                <form class="auth-login-form mt-2" action="{{ route('login.store') }}" method="POST">
                                     @csrf
                                     <x-admin.input name="username" label="Email Or Phone" placeholder="Email Or Phone" tabindex="1"/>
                                     <x-admin.input name="password" label="Password" placeholder="Password" tabindex="2" type="password">
