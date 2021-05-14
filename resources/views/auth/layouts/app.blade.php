@@ -4,11 +4,10 @@
 <html class="loading" lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-textdirection="{{ app()->getLocale()=='fa'? 'rtl':'ltr' }}">
 <!-- BEGIN: Head-->
 <head>
-    @include('panel.layouts.meta')
+    @include('auth.layouts.meta')
     <link rel="apple-touch-icon" href="{{ asset('assets/panel/images/ico/apple-icon-120.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/panel/images/ico/favicon.ico') }}">
     @include('auth.layouts.style')
-
 </head>
 <!-- END: Head-->
 <!-- BEGIN: Body-->
