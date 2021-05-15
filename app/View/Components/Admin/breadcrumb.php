@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class breadcrumb extends Component
 {
+    public $breadcrumbs;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($breadcrumbs)
     {
-        //
+        $this->breadcrumbs = $breadcrumbs;
     }
 
     /**
