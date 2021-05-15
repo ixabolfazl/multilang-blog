@@ -3,14 +3,8 @@
 
 <html class="loading" lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-textdirection="{{ app()->getLocale()=='fa'?'rtl':'ltr' }}">
 <!-- BEGIN: Head-->
-
 <head>
-
     @include('admin.layouts.meta')
-    <link rel="apple-touch-icon" href="{{ asset('assets/admin/images/ico/apple-icon-120.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/admin/images/ico/favicon.ico') }}">
-    @include('admin.layouts.style')
-
 </head>
 <!-- END: Head-->
 
@@ -29,7 +23,7 @@
     <div class="content-wrapper">
         <div class="content-header row">
 
-            @include('admin.layouts.breadcrumb')
+            @yield('breadcrumb')
 
         </div>
 
@@ -42,7 +36,6 @@
 <div class="drag-target"></div>
 
 @include('admin.layouts.footer')
-
 @include('admin.layouts.script')
 
 </body>
