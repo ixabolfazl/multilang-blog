@@ -104,4 +104,56 @@ class UserController extends Controller
         $user->delete();
         return redirect()->back()->with('status', 'hi');
     }
+
+
+    /**
+     * Force Delete Users from storage.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function delete($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->forceDelete();
+        return redirect()->back()->with('status', 'hi');
+    }
+
+    /**
+     * Restore Deleted Users.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
+        return redirect()->back()->with('status', 'hi');
+    }
+
+    /**
+     * Change Status resource from storage.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function changeStatus(User $user)
+    {
+        if ($user->status == 'enable') {
+            $user->update([
+                'status' => 'disable'
+            ]);
+        } else {
+            $user->update([
+                'status' => 'enable'
+            ]);
+        }
+        return redirect()->back();
+    }
+
+
 }
