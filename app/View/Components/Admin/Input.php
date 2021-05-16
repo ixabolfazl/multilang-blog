@@ -21,11 +21,11 @@ class Input extends Component
      * @param $tabindex
      * @param $type
      */
-    public function __construct($name, $label, $placeholder, $tabindex, $type = 'text')
+    public function __construct($name, $label, $placeholder = null, $tabindex, $type = 'text')
     {
         $this->name = $name;
         $this->label = $label;
-        $this->placeholder = $placeholder;
+        $this->placeholder = $placeholder == null ? $label : $placeholder;
         $this->tabindex = $tabindex;
         $this->type = $type;
     }
