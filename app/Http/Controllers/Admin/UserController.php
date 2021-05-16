@@ -27,6 +27,18 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of Deleted Users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trash()
+    {
+        $breadcrumbs = $this->breadcrumbs;
+        $users = User::onlyTrashed()->paginate(15);
+        return view('admin.users.deleted', compact(['breadcrumbs', 'users']));
+    }
+
+    /**
      * Show the form for creating a new Users.
      *
      * @return \Illuminate\Http\Response
