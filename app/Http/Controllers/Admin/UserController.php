@@ -3,22 +3,31 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public $breadcrumbs = [
+        'Dashboard' => 'admin.dashboard',
+        'Users' => 'admin.users',
+    ];
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Users.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $breadcrumbs = $this->breadcrumbs;
+        $users = User::paginate(15);
+        return view('admin.users.users', compact(['breadcrumbs', 'users']));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Users.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,7 +37,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Users in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -39,7 +48,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display Users.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -50,7 +59,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing Users.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -61,7 +70,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Users in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
@@ -73,13 +82,14 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft Delete Users from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->back()->with('status', 'hi');
     }
 }
