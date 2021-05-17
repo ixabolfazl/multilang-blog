@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,11 +24,20 @@ Route::localized(function () {
 
     Route::get('/', function () {
         return view('app.index');
-    });
+    })->name('index');
 
-    Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
 
-        Route::get('/', [DashboardController::class, 'index'])->name('register');
+    Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
+
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
+            Route::get('{user}/status', [UserController::class, 'changeStatus'])->name('status');
+            Route::get('trash', [UserController::class, 'trash'])->name('trash');
+            Route::delete('{id}/delete', [UserController::class, 'delete'])->name('delete');
+            Route::get('{id}/restore', [UserController::class, 'restore'])->name('restore');
+        });
+        Route::resource('users', UserController::class);
 
 
     });
