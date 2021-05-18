@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AddUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
 
     public $breadcrumbs = [
         'Dashboard' => 'admin.dashboard',
-        'Users' => 'admin.users',
+        'Users' => 'admin.users.index',
     ];
 
     /**
@@ -22,7 +25,7 @@ class UserController extends Controller
     public function index()
     {
         $breadcrumbs = $this->breadcrumbs;
-        $users = User::paginate(15);
+        $users = User::orderBy('id', 'DESC')->paginate(15);
         return view('admin.users.users', compact(['breadcrumbs', 'users']));
     }
 
@@ -45,18 +48,35 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $breadcrumbs = array_merge($this->breadcrumbs, ['New User' => 'admin.users.create']);
+        return view('admin.users.new-user', compact(['breadcrumbs']));
     }
 
     /**
      * Store a newly created Users in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AddUserRequest $request)
     {
-        //
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $fileName = strtolower(Str::random(10)) . time() . "." . $request->image->extension();
+            $request->image->move(public_path('uploads/profile'), $fileName);
+            $request->image = $fileName;
+        }
+        $request->password = Hash::make($request->password);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'image' => isset($fileName) ? $fileName : Null,
+            'role' => $request->role,
+            'status' => $request->status,
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect()->route('admin.users.index')->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('created')]));
     }
 
     /**
@@ -102,7 +122,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->back()->with('status', 'hi');
+        return redirect()->back()->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
 
 
@@ -117,7 +137,7 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->forceDelete();
-        return redirect()->back()->with('status', 'hi');
+        return redirect()->back()->with('status', __('The user was :atrribute successfully!'), ['atrribute' => __('deleted')]);
     }
 
     /**
@@ -131,7 +151,7 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
-        return redirect()->back()->with('status', 'hi');
+        return redirect()->back()->with('status', __('The user was :atrribute successfully!'), ['atrribute' => __('restored')]);
     }
 
     /**
@@ -143,16 +163,19 @@ class UserController extends Controller
 
     public function changeStatus(User $user)
     {
-        if ($user->status == 'enable') {
+        if ($user->status == 'Enable') {
             $user->update([
-                'status' => 'disable'
+                'status' => 'Disable'
             ]);
         } else {
             $user->update([
-                'status' => 'enable'
+                'status' => 'Enable'
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()
+            ->with('status', __('The status of :name was :atrribute successfully!',
+                ['atrribute' => __($user->status == 'Enable' ? 'enabled' : 'disabled'),
+                    'name' => __('user')]));
     }
 
 
