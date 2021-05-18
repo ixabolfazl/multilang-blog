@@ -26,7 +26,7 @@ class AddUserRequest extends FormRequest
         return [
             'name' => 'bail|required|string|max:50',
             'email' => 'bail|required|email|max:50|unique:users',
-            'phone' => 'bail|required|numeric|size:11|unique:users',
+            'phone' => 'bail|required|numeric|unique:users',
             'image' => 'bail|image|max:1024',
             'role' => 'bail|required|string',
             'status' => 'bail|required|string',
