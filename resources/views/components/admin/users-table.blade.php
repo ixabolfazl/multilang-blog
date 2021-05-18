@@ -1,14 +1,14 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>ID</th>
+        <th>{{__('ID')}}</th>
         <th></th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Role</th>
-        <th>Status</th>
-        <th>Actions</th>
+        <th>{{__('Full Name')}}</th>
+        <th>{{__('Email')}}</th>
+        <th>{{__('Phone Number')}}</th>
+        <th>{{__('Role')}}</th>
+        <th>{{__('Status')}}</th>
+        <th>{{__('Actions')}}</th>
     </tr>
     </thead>
     <tbody>
@@ -22,36 +22,45 @@
                     </div>
                 @else
                     <div class="avatar">
-                        <img src="{{ asset($user->image) }}" alt="avatar" width="32" height="32">
+                        <img src="{{ asset('uploads/profile/'.$user->image) }}" alt="avatar" width="32" height="32">
                     </div>
                 @endif
 
             </th>
-            <td><a href="{{ route('admin.users.show',$user->id) }}">{{ $user->name }}</a></td>
+            <td>
+                @if($user->role == 'Admin' || $user->role=="Author")
+                    <a href="{{ route('admin.users.show',$user->id) }}">{{ $user->name }}</a>
+                @else
+                    {{ $user->name }}
+                @endif
+
+            </td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->phone }}</td>
             <td>
-                <a href="#"><span class="badge badge-pill badge-{{ $user->role == 'admin' || $user->role == 'author' ? 'primary' : 'secondary' }}">{{ $user->role }}</span></a>
+                <span class="badge badge-pill badge-{{ $user->role == 'Admin' || $user->role == 'Author' ? 'primary' : 'secondary' }}">{{ __($user->role) }}</span>
             </td>
             <td>
-                <span class="badge badge-pill badge-{{ $user->status=='enable' ? 'success' : 'danger'}} mr-1">{{ $user->status }}</span>
+                <span class="badge badge-pill badge-{{ $user->status=='Enable' ? 'success' : 'danger'}} mr-1">{{ __($user->status) }}</span>
             </td>
             <td>
                 <form action="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" method="post">
                     @if($type=='users')
-                        @if($user->status=='enable')
-                            <a href="{{ route('admin.users.status',$user->id) }}" data-toggle="tooltip" data-placement="top" title="Disable"><span class="badge badge-pill badge-warning"><i data-feather='eye-off'></i></span></a>
+                        @if($user->status=='Enable')
+                            <a href="{{ route('admin.users.status',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{__('Disable')}}"><span class="badge badge-pill badge-warning"><i data-feather='eye-off'></i></span></a>
                         @else
-                            <a href="{{ route('admin.users.status',$user->id) }}" data-toggle="tooltip" data-placement="top" title="Enable"><span class="badge badge-pill badge-success"><i data-feather='check'></i></span></a>
+                            <a href="{{ route('admin.users.status',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Enable') }}"><span class="badge badge-pill badge-success"><i data-feather='check'></i></span></a>
                         @endif
-                        <a href="{{ route('admin.users.edit',$user->id) }}" data-toggle="tooltip" data-placement="top" title="Edit"><span class="badge badge-pill badge-secondary"><i data-feather="edit"></i></span></a>
-                        <a href="{{ route('admin.users.show',$user->id) }}" data-toggle="tooltip" data-placement="top" title="View"><span class="badge badge-pill badge-info"><i data-feather='external-link'></i></span></a>
+                        <a href="{{ route('admin.users.edit',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Edit') }}"><span class="badge badge-pill badge-secondary"><i data-feather="edit"></i></span></a>
                     @else
-                        <a href="{{ route('admin.users.restore',$user->id) }}" data-toggle="tooltip" data-placement="top" title="Restore"><span class="badge badge-pill badge-success"><i data-feather='check'></i></span></a>
+                        <a href="{{ route('admin.users.restore',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Restore') }}"><span class="badge badge-pill badge-success"><i data-feather='check'></i></span></a>
                     @endif
                     @csrf
                     @method('DELETE')
-                    <a href="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" onclick="event.preventDefault();this.closest('form').submit()" data-toggle="tooltip" data-placement="top" title="Delete"><span class="badge badge-pill badge-danger"><i data-feather="trash-2"></i></span></a>
+                    <a href="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" onclick="event.preventDefault();this.closest('form').submit()" data-toggle="tooltip" data-placement="top" title="{{ __('Delete') }}"><span class="badge badge-pill badge-danger"><i data-feather="trash-2"></i></span></a>
+                    @if($user->role == 'Admin' || $user->role=="Author")
+                        <a href="{{ route('admin.users.show',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('View') }}"><span class="badge badge-pill badge-info"><i data-feather='external-link'></i></span></a>
+                    @endif
                 </form>
 
             </td>
