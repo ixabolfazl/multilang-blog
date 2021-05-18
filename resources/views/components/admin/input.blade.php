@@ -5,7 +5,7 @@
     </div>
     @if($type=='file')
         <div class="custom-file">
-            <input type="file" class="custom-file-input @error($name) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}">
+            <input type="file" class="custom-file-input @error($name) is-invalid @enderror" id="{{ $name }}" name="{{ $name }} " tabindex="{{ $tabindex }}">
             <label class="custom-file-label" for="{{ $name }}">{{ $placeholder }}</label>
             @error($name)
             <div class="invalid-feedback">{{ $message }}</div>
