@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function trash()
     {
-        $breadcrumbs = $this->breadcrumbs;
+        $breadcrumbs = array_merge($this->breadcrumbs, ['Deleted Users' => 'admin.users.trash']);
         $users = User::onlyTrashed()->paginate(15);
         return view('admin.users.deleted', compact(['breadcrumbs', 'users']));
     }
@@ -151,7 +151,7 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
-        return redirect()->back()->with('status', __('The user was :atrribute successfully!'), ['atrribute' => __('restored')]);
+        return redirect()->back()->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('restored')]));
     }
 
     /**
