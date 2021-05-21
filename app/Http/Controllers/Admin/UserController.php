@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddUserRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -20,7 +23,7 @@ class UserController extends Controller
     /**
      * Display a listing of the Users.
      *
-     * @return \Illuminate\Http\Response
+     * @return View|Response
      */
     public function index()
     {
@@ -32,7 +35,7 @@ class UserController extends Controller
     /**
      * Display a listing of Deleted Users.
      *
-     * @return \Illuminate\Http\Response
+     * @return View|Response
      */
     public function trash()
     {
@@ -44,7 +47,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new Users.
      *
-     * @return \Illuminate\Http\Response
+     * @return View|Response
      */
     public function create()
     {
@@ -55,8 +58,8 @@ class UserController extends Controller
     /**
      * Store a newly created Users in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param AddUserRequest $request
+     * @return RedirectResponse
      */
     public function store(AddUserRequest $request)
     {
@@ -83,7 +86,7 @@ class UserController extends Controller
      * Display Users.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return View|Response
      */
     public function show($id)
     {
@@ -93,31 +96,48 @@ class UserController extends Controller
     /**
      * Show the form for editing Users.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return View|Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $breadcrumbs = array_merge($this->breadcrumbs, ['Edit User' => 'admin.users.edit-user']);
+        return view('admin.users.edit-user', compact(['breadcrumbs', 'user']));
     }
 
     /**
      * Update Users in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateUserRequest $request
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $fileName = strtolower(Str::random(10)) . time() . "." . $request->image->extension();
+            $request->image->move(public_path('uploads/profile'), $fileName);
+        }
+
+        $user->update(array_filter([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'image' => isset($fileName) ? 'uploads/profile/' . $fileName : Null,
+            'role' => $request->role,
+            'status' => $request->status,
+            'password' => Hash::make($request->password),
+        ]));
+        return redirect()->route('admin.users.index')
+            ->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('updated')]));
     }
 
     /**
      * Soft Delete Users from storage.
      *
      * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy(User $user)
     {
@@ -129,8 +149,8 @@ class UserController extends Controller
     /**
      * Force Delete Users from storage.
      *
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @param $id
+     * @return RedirectResponse
      */
 
     public function delete($id)
@@ -143,8 +163,8 @@ class UserController extends Controller
     /**
      * Restore Deleted Users.
      *
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @param $id
+     * @return RedirectResponse
      */
 
     public function restore($id)
@@ -158,7 +178,7 @@ class UserController extends Controller
      * Change Status resource from storage.
      *
      * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
 
     public function changeStatus(User $user)
@@ -174,8 +194,7 @@ class UserController extends Controller
         }
         return redirect()->back()
             ->with('status', __('The status of :name was :atrribute successfully!',
-                ['atrribute' => __($user->status == 'Enable' ? 'enabled' : 'disabled'),
-                    'name' => __('user')]));
+                ['atrribute' => __($user->status == 'Enable' ? 'enabled' : 'disabled'), 'name' => __('user')]));
     }
 
 
