@@ -11,6 +11,7 @@ class Input extends Component
     public $placeholder;
     public $tabindex;
     public $type;
+    public $value;
 
     /**
      * Create a new component instance.
@@ -21,13 +22,14 @@ class Input extends Component
      * @param $tabindex
      * @param $type
      */
-    public function __construct($name, $label, $placeholder = null, $tabindex, $type = 'text')
+    public function __construct($name, $label, $placeholder = null, $tabindex, $value = null, $type = 'text')
     {
         $this->name = $name;
         $this->label = $label;
         $this->placeholder = $placeholder == null ? $label : $placeholder;
         $this->tabindex = $tabindex;
         $this->type = $type;
+        $this->value = $value;
     }
 
     /**
