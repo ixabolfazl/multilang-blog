@@ -6,6 +6,7 @@
         <th>{{__('Full Name')}}</th>
         <th>{{__('Email')}}</th>
         <th>{{__('Phone Number')}}</th>
+        <th>{{__('Registery date')}}</th>
         <th>{{__('Role')}}</th>
         <th>{{__('Status')}}</th>
         <th>{{__('Actions')}}</th>
@@ -22,7 +23,7 @@
                     </div>
                 @else
                     <div class="avatar">
-                        <img src="{{ asset('uploads/profile/'.$user->image) }}" alt="avatar" width="32" height="32">
+                        <img src="{{ asset($user->image) }}" alt="avatar" width="32" height="32">
                     </div>
                 @endif
 
@@ -37,8 +38,9 @@
             </td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->phone }}</td>
+            <td>{{  (app()->getLocale() == 'fa' ? Verta::instance($user->created_at) : $user->created_at)->format('Y/m/d') }}</td>
             <td>
-                <span class="badge badge-pill badge-{{ $user->role == 'Admin' || $user->role == 'Author' ? 'primary' : 'secondary' }}">{{ __($user->role) }}</span>
+                <span class="badge badge-pill badge-{{ $user->role != 'User' ? 'primary' : 'secondary' }}">{{ __($user->role) }}</span>
             </td>
             <td>
                 <span class="badge badge-pill badge-{{ $user->status=='Enable' ? 'success' : 'danger'}} mr-1">{{ __($user->status) }}</span>
@@ -57,9 +59,10 @@
                     @endif
                     @csrf
                     @method('DELETE')
-                    <a href="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" onclick="event.preventDefault();this.closest('form').submit()" data-toggle="tooltip" data-placement="top" title="{{ __('Delete') }}"><span class="badge badge-pill badge-danger"><i data-feather="trash-2"></i></span></a>
-                    @if($user->role == 'Admin' || $user->role=="Author")
+                    @if($user->role != 'User')
                         <a href="{{ route('admin.users.show',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('View') }}"><span class="badge badge-pill badge-info"><i data-feather='external-link'></i></span></a>
+                    @else
+                        <a href="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" onclick="event.preventDefault();this.closest('form').submit()" data-toggle="tooltip" data-placement="top" title="{{ __('Delete') }}"><span class="badge badge-pill badge-danger"><i data-feather="trash-2"></i></span></a>
                     @endif
                 </form>
 
