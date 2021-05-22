@@ -1,5 +1,13 @@
 @extends('admin.layouts.app')@section('title','')
-
+@section('vendor-style')
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/vendors/css/extensions/sweetalert2.min.css") }}">
+@endsection
+@section('page-style-rtl')
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css-rtl/plugins/extensions/ext-component-sweet-alerts.css") }}">
+@endsection
+@section('page-style-ltr')
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css-ltr/plugins/extensions/ext-component-sweet-alerts.css") }}">
+@endsection
 @section('breadcrumb')
     <x-admin.breadcrumb :breadcrumbs="$breadcrumbs"/>
 @endsection
@@ -58,7 +66,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <button type="button" class="btn btn-outline-primary btn-sm waves-effect round">{{ __('Delete') }}</button>
+                                                    <a class="btn btn-outline-primary btn-sm waves-effect round" href="{{ route('admin.users.removeImage',$user->id) }}">{{ __('Delete') }}</a>
                                                 </div>
                                             @endif
 
@@ -88,5 +96,23 @@
             </div>
         </div>
     </div>
+@endsection
+@section('vendor-script')
+    <script src="{{ asset('assets/admin/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
+@endsection
+@section('page-script')
+    <script src="{{ asset('assets/admin/js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
+    @if(Session::has('status'))
+        <script>
+            $(window).on('load', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ Session::get('status') }}',
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
+            })
+        </script>
+    @endif
 @endsection
 
