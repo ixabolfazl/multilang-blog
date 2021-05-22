@@ -33,6 +33,7 @@ Route::localized(function () {
 
         Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
             Route::get('{user}/status', [UserController::class, 'changeStatus'])->name('status');
+            Route::get('{user}/image', [UserController::class, 'removeImage'])->name('removeImage');
             Route::get('trash', [UserController::class, 'trash'])->name('trash');
             Route::delete('{id}/delete', [UserController::class, 'delete'])->name('delete');
             Route::get('{id}/restore', [UserController::class, 'restore'])->name('restore');
