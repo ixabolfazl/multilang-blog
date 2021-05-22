@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -175,7 +176,7 @@ class UserController extends Controller
     }
 
     /**
-     * Change Status resource from storage.
+     * Change Status user from storage.
      *
      * @param User $user
      * @return RedirectResponse
@@ -195,6 +196,25 @@ class UserController extends Controller
         return redirect()->back()
             ->with('status', __('The status of :name was :atrribute successfully!',
                 ['atrribute' => __($user->status == 'Enable' ? 'enabled' : 'disabled'), 'name' => __('user')]));
+    }
+
+
+    /**
+     * Remove Image from storage.
+     *
+     * @param User $user
+     * @return RedirectResponse|void
+     */
+
+    public function removeImage(User $user)
+    {
+        if ($user->image != Null && File::exists(public_path($user->image))) {
+            File::delete(public_path($user->image));
+            $user->update(['image' => Null]);
+            return redirect()->back()
+                ->with('status', __('The image of user was deleted successfully!',));
+        }
+        return abort(404);
     }
 
 
