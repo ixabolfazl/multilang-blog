@@ -75,7 +75,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'image' => isset($fileName) ? $fileName : Null,
+            'image' => isset($fileName) ? 'uploads/profile/' . $fileName : Null,
             'role' => $request->role,
             'status' => $request->status,
             'password' => Hash::make($request->password),
@@ -117,8 +117,13 @@ class UserController extends Controller
     {
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            //upload new image
             $fileName = strtolower(Str::random(10)) . time() . "." . $request->image->extension();
             $request->image->move(public_path('uploads/profile'), $fileName);
+            //remove last image
+            if ($user->image != Null && File::exists(public_path($user->image))) {
+                File::delete(public_path($user->image));
+            }
         }
 
         $user->update(array_filter([
