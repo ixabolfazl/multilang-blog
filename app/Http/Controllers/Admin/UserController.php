@@ -163,7 +163,7 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->forceDelete();
-        return redirect()->back()->with('status', __('The user was :atrribute successfully!'), ['atrribute' => __('deleted')]);
+        return redirect()->back()->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
 
     /**
