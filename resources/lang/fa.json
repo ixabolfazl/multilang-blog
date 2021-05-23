@@ -1,5 +1,6 @@
 {
     "Author": "نویسنده",
+    "Are you sure?": "مطمعن هستید؟",
     "Admin": "ادمین",
     "Actions": "عملیات",
     "Dashboard": "پنل کاربری",
@@ -8,6 +9,7 @@
     "Deleted Users": "کاربران حذف شده",
     "disabled": "غیر فعال",
     "deleted": "حذف",
+    "Cancel": "لغو",
     "Choose Image": "انتخاب عکس",
     "Create": "ساختن",
     "created": "ساخته",
@@ -26,9 +28,11 @@
     "Password Confirmation": "تایید رمز عبور",
     "Posts": "پست ها",
     "Restore": "بازگرداندن",
+    "Registery date": "تاریخ عضویت",
     "restored": "بازگردانده",
     "Role": "نقش",
     "Status": "وضعیت",
+    "Success": "موفق",
     "The user was :atrribute successfully!": "کاربر با موفقیت :atrribute شد!",
     "The status of :name was :atrribute successfully!": ":name با موفقیت :atrribute شد!",
     "The image of user was deleted successfully!": "عکس پروفایل کاربر با موفقیت حذف شد!",
@@ -36,5 +40,8 @@
     "user": "کاربر",
     "Users": "کاربران",
     "updated": "ویرایش",
-    "View": "نمایش"
+    "View": "نمایش",
+    "Yes, delete it!": "بله، آن را حذف کن!",
+    "You can restore it later!": "شما میتوانید بعدا آن را بازیابی کنید!",
+    "You won't be able to revert this!": "شما نمیتوانید بعدا آن را بازیابی کنید!"
 }

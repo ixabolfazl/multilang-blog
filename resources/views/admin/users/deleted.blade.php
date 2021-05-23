@@ -48,4 +48,26 @@
             })
         </script>
     @endif
+    <script>
+        function destroyUser(id) {
+            event.preventDefault();
+            Swal.fire({
+                title: '{{ __('Are you sure?')}}',
+                text: '{{__('You won\'t be able to revert this!')}}',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '{{ __('Yes, delete it!')}}',
+                cancelButtonText: '{{ __('Cancel')}}',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ml-1'
+                },
+                buttonsStyling: false
+            }).then(function (result) {
+                if (result.value) {
+                    document.getElementById(`destroy-user-${id}`).submit();
+                }
+            });
+        }
+    </script>
 @endsection

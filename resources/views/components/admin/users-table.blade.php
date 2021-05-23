@@ -46,7 +46,7 @@
                 <span class="badge badge-pill badge-{{ $user->status=='Enable' ? 'success' : 'danger'}} mr-1">{{ __($user->status) }}</span>
             </td>
             <td>
-                <form action="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" method="post">
+                <form action="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" id="destroy-user-{{$user->id}}" method="post">
                     @if($type=='users')
                         @if($user->status=='Enable')
                             <a href="{{ route('admin.users.status',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{__('Disable')}}"><span class="badge badge-pill badge-warning"><i data-feather='eye-off'></i></span></a>
@@ -62,7 +62,7 @@
                     @if($user->role != 'User')
                         <a href="{{ route('admin.users.show',$user->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('View') }}"><span class="badge badge-pill badge-info"><i data-feather='external-link'></i></span></a>
                     @else
-                        <a href="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" onclick="event.preventDefault();this.closest('form').submit()" data-toggle="tooltip" data-placement="top" title="{{ __('Delete') }}"><span class="badge badge-pill badge-danger"><i data-feather="trash-2"></i></span></a>
+                        <a href="{{ route($type=='users'?'admin.users.destroy' : 'admin.users.delete',$user->id) }}" onclick="destroyUser({{ $user->id }})" data-toggle="tooltip" data-placement="top" title="{{ __('Delete') }}"><span class="badge badge-pill badge-danger"><i data-feather="trash-2"></i></span></a>
                     @endif
                 </form>
 
