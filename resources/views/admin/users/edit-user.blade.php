@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex flex-sm-row flex-column mt-2">
-                                        <input type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1" value="{{__('Create')}}">
+                                        <input type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1" value="{{__('Update')}}">
                                     </div>
                                 </div>
                             </form>
