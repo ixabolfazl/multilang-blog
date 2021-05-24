@@ -8,14 +8,23 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    public $breadcrumbs = [
+        'Dashboard' => 'admin.dashboard',
+        'Categories' => 'admin.categories.index',
+    ];
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $breadcrumbs = $this->breadcrumbs;
+        $categories = Category::orderBy('id', 'DESC')->paginate(15);
+        $parents = Category::where('category_id', Null)->get();
+        return view('admin.categories.categories', compact(['breadcrumbs', 'categories', 'parents']));
     }
 
     /**
