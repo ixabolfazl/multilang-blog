@@ -13,4 +13,9 @@ class Category extends Model implements TranslatableContract
 
     public $translatedAttributes = ['name', 'meta'];
     protected $fillable = ['slug', 'status', 'category_id'];
+
+    public function getParentNameAttribute()
+    {
+        return Category::find($this->category_id)->name ?: null;
+    }
 }
