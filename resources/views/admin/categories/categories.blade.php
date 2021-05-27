@@ -9,8 +9,7 @@
 @section('page-style-ltr')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css-ltr/plugins/extensions/ext-component-sweet-alerts.css") }}">
 @endsection
-@section('title','')
-
+@section('title',__(array_key_last($breadcrumbs)))
 @section('breadcrumb')
     <x-admin.breadcrumb :breadcrumbs="$breadcrumbs"/>
 @endsection
@@ -42,8 +41,8 @@
                                         <a href="{{ route('admin.categories.show',$category->name) }}">{{ $category->name }}</a>
                                     </td>
                                     <td>
-                                        @if($category->category_id)
-                                            <a href="{{ route('admin.categories.show',$category->category_id) }}">{{ $category->category_id }}</a>
+                                        @unless($category->category_id ==null)
+                                            <a href="{{ route('admin.categories.show',$category->category_id) }}">{{ $category->parent_name }}</a>
                                         @else
                                             {{__('No parent')}}
                                         @endif
@@ -84,35 +83,48 @@
                     <div class="card-body">
                         <form action="{{ route('admin.categories.store') }}" method="post" class="form">
                             @csrf
-                            <div class="row">
-                                <div class="col-sm-12 col-12">
-                                    <div class="form-group mb-2">
-                                        <div class="custom-control custom-switch custom-switch-success">
-                                            <p class="mb-50">{{__('Status')}}</p>
-                                            <input type="hidden" name="status" value="Disable">
-                                            <input type="checkbox" class="custom-control-input" id="status" name="status" value="Enable" checked/>
-                                            <label class="custom-control-label" for="status">
-                                                <span class="switch-icon-left"><i data-feather="check"></i></span>
-                                                <span class="switch-icon-right"><i data-feather="x"></i></span> </label>
+                            <div class="col-12 mb-1">
+                                <x-admin.checkbox-status name="status" :label="__('Status')" tabindex="1"/>
+                            </div>
+                            <div class="col-12 mb-1">
+                                <x-admin.input name="slug" :label="__('Slug')" tabindex="2"/>
+                            </div>
+                            <div class="col12">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    @foreach(config('translatable.locales') as $local)
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $loop->index!=0 ?: 'active' }}" id="{{$local}}-tab" data-toggle="tab" href="#{{$local}}" aria-controls="home" role="tab" aria-selected="{{ $loop->index==0 ? 'true' : 'false' }}">{{ __($local) }}
+                                                <img style="padding: 10px" src="{{ asset("assets/app/img/flag/$local.png")  }}" alt="fa"></a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <div class="tab-content">
+                                    @foreach(config('translatable.locales') as $local)
+                                        <div class="tab-pane {{ $loop->index!=0 ?: 'active' }}" id="{{$local}}" aria-labelledby="{{$local}}-tab" role="tabpanel">
+                                            <div class="col-10 mb-1">
+                                                <x-admin.input name="{{$local}}[name]" :label="__('Category Name')" tabindex="3"/>
+                                            </div>
+                                            <div class="col-10 mb-1">
+                                                <x-admin.input name="{{$local}}[meta]" :label="__('Meta')" :placeholder="__('Meta Description')" tabindex="4"/>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                                <div class="col-sm-12 col-12">
-                                    <x-admin.input name="name" :label="__('Category Name')" tabindex="1"/>
-                                </div>
-                                <div class="col-12 mb-1">
+                            </div>
+
+                            <div class="col-12 mb-1">
+                                <div class="form-group">
                                     <label>{{__('Parent Category')}}</label>
                                     <select name="category_id" class="select2 form-control form-control-lg">
-                                        <option value="" tabindex="2" selected>{{__('No parent')}}</option>
+                                        <option value="" tabindex="5" selected>{{__('No parent')}}</option>
                                         @foreach($parents as $parent)
                                             <option value="{{ $parent->id }}">{{ $parent->name }}</option>
                                         @endforeach
                                     </select>
-
                                 </div>
-                                <div class="col-12">
-                                    <input type="submit" class="btn btn-primary waves-float waves-light" VALUE="{{__('Create')}}">
-                                </div>
+                            </div>
+                            <div class="col-12 mb-1">
+                                <input type="submit" class="btn btn-primary waves-float waves-light" VALUE="{{__('Create')}}">
                             </div>
                         </form>
                     </div>
@@ -128,7 +140,6 @@
 @endsection
 @section('page-script')
     <script src="{{ asset('assets/admin/js/scripts/forms/form-select2.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
     @if(Session::has('status'))
         <script>
             $(window).on('load', function () {
