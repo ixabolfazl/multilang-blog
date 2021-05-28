@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\AddCategoryReqest;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,18 +35,22 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AddCategoryReqest $request)
     {
-        //
+
+        // remove null fields in languages
+        $request = $this->removeNullFields($request);
+        Category::create($request->all());
+        return redirect()->back()->with('status', __('The category was :atrribute successfully!', ['atrribute' => __('created')]));
     }
 
     /**
