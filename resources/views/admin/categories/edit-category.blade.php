@@ -2,105 +2,64 @@
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/vendors/css/forms/select/select2.min.css") }}">
 @endsection
+@section('title',__(array_key_last($breadcrumbs)))
+@section('breadcrumb')
+    <x-admin.breadcrumb :breadcrumbs="$breadcrumbs"/>
+@endsection
 @section('content')
     <div class="content-body">
         <div class="row">
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">New Category</h4>
+                        <h4 class="card-title">{{__('New Category')}}</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('req') }}" class="form">
-                            <div class="row">
-                                <div class="col-sm-2 col-12">
-                                    <div class="form-group mb-2">
-                                        <div class="custom-control custom-switch custom-switch-success">
-                                            <p class="mb-50">Status</p>
-                                            <input type="checkbox" class="custom-control-input" id="status" name="status" checked/>
-                                            <label class="custom-control-label" for="status">
-                                                <span class="switch-icon-left"><i data-feather="check"></i></span>
-                                                <span class="switch-icon-right"><i data-feather="x"></i></span> </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-10 col-12">
-                                    <div class="form-group mb-2">
-                                        <label for="name">Name</label>
-                                        <input type="text" id="name" name="name" class="form-control" placeholder="Category Name" value="Category Name">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group mb-2">
-                                        <label for="payment-expiry">Category Color</label>
-                                        <div class="demo-inline-spacing">
-                                            <div class="custom-control custom-control-primary custom-radio">
-                                                <input type="radio" id="r1" name="color" class="custom-control-input" value="primary" checked>
-                                                <label class="custom-control-label" for="r1">
-                                                    <div class="badge-wrapper mr-1">
-                                                        <div class="badge badge-pill badge-primary">
-                                                            <i data-feather='check-circle'></i></div>
-                                                    </div>
-                                                </label>
-
+                        <form action="{{ route('admin.categories.update',$category->id) }}" method="post" class="form">
+                            @csrf
+                            @method('PUT')
+                            <div class="col-12 mb-1">
+                                <x-admin.checkbox-status name="status" :label="__('Status')" :checked="$category->status" tabindex="1"/>
+                            </div>
+                            <div class="col-12 mb-1">
+                                <x-admin.input name="slug" :label="__('Slug')" tabindex="2" :value="$category->slug"/>
+                            </div>
+                            <div class="col12">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    @foreach(config('translatable.locales') as $local)
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $loop->index!=0 ?: 'active' }}" id="{{$local}}-tab" data-toggle="tab" href="#{{$local}}" aria-controls="home" role="tab" aria-selected="{{ $loop->index==0 ? 'true' : 'false' }}">{{ ucfirst(__($local)) }}
+                                                <img style="padding: 10px" src="{{ asset("assets/app/img/flag/$local.png")  }}" alt="fa"></a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <div class="tab-content">
+                                    @foreach(config('translatable.locales') as $local)
+                                        <div class="tab-pane {{ $loop->index!=0 ?: 'active' }}" id="{{$local}}" aria-labelledby="{{$local}}-tab" role="tabpanel">
+                                            <div class="col-10 mb-1">
+                                                <x-admin.input name="{{$local}}[name]" :label="__('Category Name')" value="{{ isset($category->translate($local)->name) ? $category->translate($local)->name : null }}" tabindex="3"/>
                                             </div>
-                                            <div class="custom-control custom-control-success custom-radio">
-                                                <input type="radio" id="r2" name="color" class="custom-control-input" value="success">
-                                                <label class="custom-control-label" for="r2">
-                                                    <div class="badge-wrapper mr-1">
-                                                        <div class="badge badge-pill badge-success">
-                                                            <i data-feather='check-circle'></i></div>
-                                                    </div>
-                                                </label>
-
-                                            </div>
-                                            <div class="custom-control custom-control-info custom-radio">
-                                                <input type="radio" id="r3" name="color" class="custom-control-input" value="info">
-                                                <label class="custom-control-label" for="r3">
-                                                    <div class="badge-wrapper mr-1">
-                                                        <div class="badge badge-pill badge-info">
-                                                            <i data-feather='check-circle'></i></div>
-                                                    </div>
-                                                </label>
-
-                                            </div>
-                                            <div class="custom-control custom-control-warning custom-radio">
-                                                <input type="radio" id="r4" name="color" class="custom-control-input" value="warning">
-                                                <label class="custom-control-label" for="r4">
-                                                    <div class="badge-wrapper mr-1">
-                                                        <div class="badge badge-pill badge-warning">
-                                                            <i data-feather='check-circle'></i></div>
-                                                    </div>
-                                                </label>
-
-                                            </div>
-                                            <div class="custom-control custom-control-danger custom-radio">
-                                                <input type="radio" id="r5" name="color" class="custom-control-input" value="danger">
-                                                <label class="custom-control-label" for="r5">
-                                                    <div class="badge-wrapper mr-1">
-                                                        <div class="badge badge-pill badge-danger">
-                                                            <i data-feather='check-circle'></i></div>
-                                                    </div>
-                                                </label>
-
+                                            <div class="col-10 mb-1">
+                                                <x-admin.input name="{{$local}}[meta]" :label="__('Meta')" :placeholder="__('Meta Description')" value="{{ isset($category->translate($local)->meta) ? $category->translate($local)->meta : null }}" tabindex="4"/>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                                <div class="col-12 mb-1">
-                                    <label>Parent Category</label>
-                                    <select name="parent" class="select2 form-control form-control-lg">
-                                        <option value="main">main</option>
-                                        <option value="sort">sort</option>
-                                        <option value="news">news</option>
-                                        <option value="game">game</option>
-                                        <option value="tech">tech</option>
+                            </div>
+
+                            <div class="col-12 mb-1">
+                                <div class="form-group">
+                                    <label>{{__('Parent Category')}}</label>
+                                    <select name="category_id" class="select2 form-control form-control-lg">
+                                        <option value="" tabindex="5" selected>{{__('No parent')}}</option>
+                                        @foreach($parents as $parent)
+                                            <option {{ $category->category_id == $parent->id ? 'selected': '' }} value="{{ $parent->id }}">{{ $parent->name }}</option>
+                                        @endforeach
                                     </select>
-
                                 </div>
-                                <div class="col-12">
-                                    <input type="submit" class="btn btn-primary waves-float waves-light" value="Update">
-                                </div>
+                            </div>
+                            <div class="col-12 mb-1">
+                                <input type="submit" class="btn btn-primary waves-float waves-light" VALUE="{{__('Update')}}">
                             </div>
                         </form>
                     </div>
