@@ -48,9 +48,13 @@ class AddCategoryReqest extends FormRequest
      */
     public function attributes()
     {
-        return RuleFactory::make([
-            '%name%' => __('Name'),
-            '%meta%' => __('Meta'),
+        $mainAttributes = ['slug' => lcfirst(__('Slug'))];
+
+        $AttributeFactory = RuleFactory::make([
+            '%name%' => lcfirst(__('Name')),
+            '%meta%' => lcfirst(__('Meta')),
         ]);
+
+        return array_merge($mainAttributes, $AttributeFactory);
     }
 }
