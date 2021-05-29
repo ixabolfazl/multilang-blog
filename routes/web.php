@@ -41,7 +41,7 @@ Route::localized(function () {
         });
         Route::resource('users', UserController::class);
         Route::group(['as' => 'categories.', 'prefix' => 'categories'], function () {
-            Route::get('{category}/status', [CategoryController::class, 'index'])->name('status');
+            Route::get('{category}/status', [CategoryController::class, 'changeStatus'])->name('status');
         });
         Route::resource('categories', CategoryController::class);
 
