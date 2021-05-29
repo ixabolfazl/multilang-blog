@@ -101,6 +101,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->with('status', __('The category was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
 }
