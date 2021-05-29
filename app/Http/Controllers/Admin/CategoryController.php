@@ -68,11 +68,13 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Category $category)
     {
-        //
+        $breadcrumbs = array_merge($this->breadcrumbs, ['Edit Category' => 'admin.categories.edit']);
+        $parents = Category::where('category_id', Null)->get();
+        return view('admin.categories.edit-category', compact(['breadcrumbs', 'category', 'parents']));
     }
 
     /**
