@@ -8,6 +8,7 @@ class checkboxStatus extends Component
 {
     public $name;
     public $label;
+    public $checked;
 
     /**
      * Create a new component instance.
@@ -15,10 +16,11 @@ class checkboxStatus extends Component
      * @param $name
      * @param $label
      */
-    public function __construct($name, $label)
+    public function __construct($name, $label, $checked = 'Enable')
     {
         $this->name = $name;
         $this->label = $label;
+        $this->checked = $checked;
     }
 
     /**
