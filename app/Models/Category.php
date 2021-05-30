@@ -14,8 +14,29 @@ class Category extends Model implements TranslatableContract
     public $translatedAttributes = ['name', 'meta'];
     protected $fillable = ['slug', 'status', 'category_id'];
 
+
+    /**
+     * Return parent category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Return childs category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function childs()
+    {
+        return $this->hasMany(Category::class);
+    }
+
     public function getParentNameAttribute()
     {
-        return Category::find($this->category_id)->name ?: null;
+        return is_null($this->parent) ? null : $this->parent->name;
     }
 }
