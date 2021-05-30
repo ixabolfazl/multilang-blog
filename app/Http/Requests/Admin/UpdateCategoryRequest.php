@@ -32,7 +32,7 @@ class UpdateCategoryRequest extends FormRequest
             'slug' => ['required', 'regex:/^[a-z0-9-]+$/', Rule::unique('categories')->ignore($this->category->id)]
             , "$mainLocal.name" => 'required|string',
             "$mainLocal.meta" => ['nullable', "required_with:$mainLocal.name", 'string'],
-            'category_id' => 'nullable|numeric'
+            'category_id' => 'nullable|numeric|exists:categories,id'
         ];
         $ruleFactory = RuleFactory::make([
             '%name%' => 'nullable|string',
