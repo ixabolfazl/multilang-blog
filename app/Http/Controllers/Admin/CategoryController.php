@@ -24,7 +24,7 @@ class CategoryController extends Controller
     public function index()
     {
         $breadcrumbs = $this->breadcrumbs;
-        $categories = Category::orderBy('id', 'DESC')->paginate(15);
+        $categories = Category::orderBy('id', 'DESC')->with('parent')->paginate(15);
         $parents = Category::all();
         return view('admin.categories.categories', compact(['breadcrumbs', 'categories', 'parents']));
     }
