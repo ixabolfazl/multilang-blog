@@ -6,14 +6,18 @@ use Illuminate\View\Component;
 
 class PostsTable extends Component
 {
+    public $posts;
+    public $type;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($posts, $type = 'posts')
     {
-        //
+        $this->posts = $posts;
+        $this->type = $type;
     }
 
     /**
