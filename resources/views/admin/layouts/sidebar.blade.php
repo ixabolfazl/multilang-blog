@@ -22,6 +22,24 @@
                     <span class="menu-title text-truncate" data-i18n="Home">{{ __('Dashboard') }}</span> </a>
             </li>
             <li class="nav-item">
+                <a class="d-flex align-items-center" href="#"><i data-feather='file-text'></i>
+                    <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Posts')}}</span> </a>
+                <ul class="menu-content">
+                    <li class="{{ !request()->routeIs(app()->getLocale().'.admin.posts.index') ?: 'active'}}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.posts.index') }}"><i data-feather="circle"></i>
+                            <span class="menu-item" data-i18n="Collapsed Menu">{{__('Posts')}}</span></a>
+                    </li>
+                    <li class="{{ !request()->routeIs(app()->getLocale().'.admin.posts.create') ?: 'active'}}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.posts.create') }}"><i data-feather="circle"></i>
+                            <span class="menu-item" data-i18n="Collapsed Menu">{{__('New Post')}}</span></a>
+                    </li>
+                    <li class="{{ !request()->routeIs(app()->getLocale().'.admin.posts.trash') ?: 'active'}}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.posts.trash') }}"><i data-feather="circle"></i>
+                            <span class="menu-item" data-i18n="Collapsed Menu">{{__('Deleted Posts')}}</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
                 <a class="d-flex align-items-center" href="#"><i data-feather="user"></i>
                     <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Users')}}</span> </a>
                 <ul class="menu-content">
