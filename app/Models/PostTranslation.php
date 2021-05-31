@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PostTranslation extends Model
 {
     use HasFactory;
+
+    public $timestamps = true;
+    protected $fillable = ['title', 'description', 'body', 'meta', 'keywords'];
 }
