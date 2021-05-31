@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::localized(function () {
 
 
     Route::get('/', function () {
-        return view('app.index');
+        return view('admin.posts.new-post');
     })->name('index');
 
 
@@ -32,6 +33,7 @@ Route::localized(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+        //users routes
         Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
             Route::get('{user}/status', [UserController::class, 'changeStatus'])->name('status');
             Route::get('{user}/image', [UserController::class, 'removeImage'])->name('removeImage');
@@ -40,6 +42,18 @@ Route::localized(function () {
             Route::get('{id}/restore', [UserController::class, 'restore'])->name('restore');
         });
         Route::resource('users', UserController::class);
+
+        //posts routes
+        Route::group(['as' => 'posts.', 'prefix' => 'posts'], function () {
+            Route::get('{post}/status', [PostController::class, 'changeStatus'])->name('status');
+            Route::get('trash', [PostController::class, 'trash'])->name('trash');
+            Route::delete('{id}/delete', [PostController::class, 'delete'])->name('delete');
+            Route::get('{id}/restore', [PostController::class, 'restore'])->name('restore');
+        });
+        Route::resource('posts', PostController::class);
+
+
+        //categories routes
         Route::group(['as' => 'categories.', 'prefix' => 'categories'], function () {
             Route::get('{category}/status', [CategoryController::class, 'changeStatus'])->name('status');
         });
