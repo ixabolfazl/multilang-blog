@@ -13,8 +13,21 @@ class CreatePostsTranslationTable extends Migration
      */
     public function up()
     {
-        Schema::table('post_translations', function (Blueprint $table) {
-            //
+        Schema::create('post_translations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('post_id');
+            $table->string('locale')->index();
+            $table->string('title');
+            $table->text('description');
+            $table->text('body');
+            $table->string('meta')->nullable();
+            $table->string('keywords')->nullable();
+            $table->unique(['post_id', 'locale']);
+            $table->foreign('post_id')->references('id')
+                ->on('posts')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+            $table->timestamps();
         });
     }
 
