@@ -3,22 +3,31 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public $breadcrumbs = [
+        'Dashboard' => 'admin.dashboard',
+        'Posts' => 'admin.posts.index',
+    ];
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of the post.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $breadcrumbs = $this->breadcrumbs;
+        $posts = Post::orderBy('id', 'DESC')->with('user')->paginate(15);
+        return view('admin.posts.posts', compact(['breadcrumbs', 'posts']));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new post.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,7 +37,7 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created post in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -39,7 +48,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified post.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -50,7 +59,7 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified post.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -61,7 +70,7 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified post in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
@@ -73,7 +82,7 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified post from storage.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
