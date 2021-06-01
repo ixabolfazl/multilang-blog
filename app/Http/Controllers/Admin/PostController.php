@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -29,11 +30,13 @@ class PostController extends Controller
     /**
      * Show the form for creating a new post.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $breadcrumbs = $breadcrumbs = array_merge($this->breadcrumbs, ['New Post' => 'admin.posts.create']);
+        $categories = Category::orderBy('id', 'DESC')->where('status', 'enable')->get();
+        return view('admin.posts.new-post', compact(['breadcrumbs', 'categories']));
     }
 
     /**
