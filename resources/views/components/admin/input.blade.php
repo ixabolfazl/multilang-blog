@@ -12,7 +12,7 @@
             @enderror
         </div>
     @else
-        <input type="{{ $type }}" class="form-control @error(str_replace("[",".",trim($name,"]"))) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}" placeholder="{{ $placeholder }}" aria-describedby="{{ $name }}" tabindex="{{ $tabindex }}" autofocus value="{{ $value == null || $errors->any() ? old(str_replace("[",".",trim($name,"]"))) : $value }}"/>
+        <input dir="{{ $dir }}" type="{{ $type }}" class="form-control @error(str_replace("[",".",trim($name,"]"))) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}" placeholder="{{ $placeholder }}" aria-describedby="{{ $name }}" tabindex="{{ $tabindex }}" autofocus value="{{ $value == null || $errors->any() ? old(str_replace("[",".",trim($name,"]"))) : $value }}"/>
     @endif
     @error(str_replace("[",".",trim($name,"]")))
     <div class="invalid-feedback">{{ $message }}</div>

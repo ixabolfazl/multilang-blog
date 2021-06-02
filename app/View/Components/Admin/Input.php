@@ -12,6 +12,8 @@ class Input extends Component
     public $tabindex;
     public $type;
     public $value;
+    public $local;
+    public $dir;
 
     /**
      * Create a new component instance.
@@ -21,8 +23,9 @@ class Input extends Component
      * @param $placeholder
      * @param $tabindex
      * @param $type
+     * @param $local
      */
-    public function __construct($name, $label, $placeholder = null, $tabindex, $value = null, $type = 'text')
+    public function __construct($name, $label, $placeholder = null, $tabindex, $value = null, $type = 'text', $local = null)
     {
         $this->name = $name;
         $this->label = $label;
@@ -30,6 +33,8 @@ class Input extends Component
         $this->tabindex = $tabindex;
         $this->type = $type;
         $this->value = $value;
+        $this->local = $local != null ? $local : app()->getLocale();
+        $this->dir = $this->local == 'fa' ? 'rtl' : 'ltr';
     }
 
     /**

@@ -14,6 +14,7 @@ class Textarea extends Component
     public $value;
     public $rows;
     public $local;
+    public $dir;
 
     /**
      * Create a new component instance.
@@ -37,6 +38,7 @@ class Textarea extends Component
         $this->value = $value;
         $this->rows = $rows;
         $this->local = $local != null ? $local : app()->getLocale();
+        $this->dir = $this->local == 'fa' ? 'rtl' : 'ltr';
     }
 
     /**
