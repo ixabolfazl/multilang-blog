@@ -44,6 +44,7 @@ Route::localized(function () {
         Route::resource('users', UserController::class);
 
         //posts routes
+        Route::post('upload-image', [PostController::class, 'upload'])->name('upload-image');
         Route::group(['as' => 'posts.', 'prefix' => 'posts'], function () {
             Route::get('{post}/status', [PostController::class, 'changeStatus'])->name('status');
             Route::get('trash', [PostController::class, 'trash'])->name('trash');
