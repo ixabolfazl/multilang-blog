@@ -1,6 +1,11 @@
 @extends('admin.layouts.app')
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/vendors/css/forms/select/select2.min.css") }}">
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 300px;
+        }
+    </style>
 @endsection
 @section('title',__(array_key_last($breadcrumbs)))
 @section('breadcrumb')
@@ -91,17 +96,18 @@
     <script src="{{ asset('assets/admin/js/scripts/forms/form-select2.js') }}"></script>
     <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
     <script>
-        var allEditors = document.querySelectorAll('.editor');
-        for (var i = 0; i < allEditors.length; ++i) {
+        const allEditors = document.querySelectorAll('.editor');
+        for (let i = 0; i < allEditors.length; ++i) {
             ClassicEditor.create(allEditors[i],
                 {
                     toolbar: {
                         items: ['heading', '|', 'fontSize', 'fontBackgroundColor', 'fontColor', 'highlight', 'fontFamily', 'bold', 'italic', 'underline', 'link', 'alignment',
-                            'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'imageUpload', 'imageInsert', 'blockQuote', 'insertTable', 'removeFormat', 'undo', 'redo']
+                            'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'imageInsert', 'blockQuote', 'insertTable', 'undo', 'redo']
                     },
                     language: '{{ app()->getLocale() }}',
                     image: {toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side', 'linkImage']},
                     table: {contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']},
+                    simpleUpload: {uploadUrl: '{{ route('admin.upload-image',['_token'=>csrf_token()]) }}'}
                 });
         }
     </script>
