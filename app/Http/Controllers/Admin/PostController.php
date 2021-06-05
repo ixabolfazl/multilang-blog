@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -93,5 +96,27 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * upload the image in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return response
+     */
+    public function upload(Request $request)
+    {
+        $validator = Validator::make($request->all(), ['upload' => 'image|max:1024',], [], ['upload' => __('Image')]);
+
+        if ($validator->fails()) {
+            return response(['error' => ['message' => $validator->errors()->first()]]);
+        } elseif ($request->hasFile('upload') && $request->file('upload')->isValid()) {
+            //upload image
+            $fileName = strtolower(Str::random(10)) . time() . "." . $request->upload->extension();
+            $request->upload->move(public_path('uploads/posts'), $fileName);
+            $url = asset('uploads/posts/' . $fileName);
+            return response(['url' => $url]);
+        }
     }
 }
