@@ -30,7 +30,7 @@ class AddCategoryReqest extends FormRequest
         $mainRule = [
             'slug' => 'required|regex:/^[a-z0-9-]+$/|unique:categories'
             , "$mainLocal.name" => 'required|string',
-            "$mainLocal.meta" => ['nullable', "required_with:$mainLocal.name", 'string'],
+            "$mainLocal.meta" => "nullable|required_with:$mainLocal.name|string",
             'category_id' => 'nullable|numeric|exists:categories,id'
         ];
         $ruleFactory = RuleFactory::make([
@@ -48,11 +48,11 @@ class AddCategoryReqest extends FormRequest
      */
     public function attributes()
     {
-        $mainAttributes = ['slug' => lcfirst(__('Slug'))];
+        $mainAttributes = ['slug' => __('slug')];
 
         $AttributeFactory = RuleFactory::make([
-            '%name%' => lcfirst(__('Name')),
-            '%meta%' => lcfirst(__('Meta')),
+            '%name%' => __('name'),
+            '%meta%' => __('meta'),
         ]);
 
         return array_merge($mainAttributes, $AttributeFactory);
