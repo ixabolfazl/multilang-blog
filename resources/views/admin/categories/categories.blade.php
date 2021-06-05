@@ -38,7 +38,7 @@
                                 <tr>
                                     <td>{{ $loop->index+1 }}</td>
                                     <td>
-                                        <a href="{{ route('admin.categories.show',$category->name) }}">{{ $category->name }}</a>
+                                        <a href="{{ route('admin.categories.show',$category->id) }}">{{ $category->name }}</a>
                                     </td>
                                     <td>
                                         @unless($category->category_id ==null)
