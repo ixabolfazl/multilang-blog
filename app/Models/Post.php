@@ -43,4 +43,14 @@ class Post extends Model
         return app()->getLocale() == 'fa' ? Verta::instance($this->created_at)->format('Y/m/d') : ($this->created_at)->format('Y/m/d');
     }
 
+    /**
+     * Return image path.
+     * @param $value
+     * @return string
+     */
+    public function getImageAttribute($value)
+    {
+        return 'uploads/posts/image/' . $value;
+    }
+
 }
