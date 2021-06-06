@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AddPostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -45,12 +46,29 @@ class PostController extends Controller
     /**
      * Store a newly created post in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param AddPostRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AddPostRequest $request)
     {
-        //
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            $fileName = $request->image->getClientOriginalName();
+
+            while (File::exists(public_path('uploads/posts/image/' . $fileName))) {
+                $fileName = strtolower(Str::random(3)) . '-' . $fileName;
+            }
+            $request->image->move(public_path('uploads/posts/image'), $fileName);
+
+        }
+
+        // remove null fields in languages
+        $request = $this->removeNullFields($request);
+
+        Post::create(array_merge($request->all(), ['user_id' => auth()->user()->id, 'image' => $fileName]));
+        return redirect()->route('admin.posts.index')->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('created')]));
+
     }
 
     /**
@@ -103,7 +121,7 @@ class PostController extends Controller
      * upload the image in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function upload(Request $request)
     {
