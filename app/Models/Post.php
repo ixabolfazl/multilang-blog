@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Scopes;
 use Astrotomic\Translatable\Translatable;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory, Translatable, softDeletes;
+    use HasFactory, Translatable, softDeletes, Scopes;
 
     public $translatedAttributes = ['title', 'description', 'body', 'meta', 'keywords'];
     protected $fillable = ['slug', 'status', 'user_id', 'image',];

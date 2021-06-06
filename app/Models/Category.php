@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Traits\Scopes;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model implements TranslatableContract
 {
 
-    use HasFactory, Translatable;
+    use HasFactory, Translatable, Scopes;
 
     public $translatedAttributes = ['name', 'meta'];
     protected $fillable = ['slug', 'status', 'category_id'];
