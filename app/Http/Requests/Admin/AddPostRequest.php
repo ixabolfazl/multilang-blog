@@ -28,7 +28,7 @@ class AddPostRequest extends FormRequest
         $mainLocal = array_shift($locals);
 
         $mainRule = [
-            'slug' => 'required|regex:/^[a-z0-9-]+$/|unique:posts',
+            'slug' => 'nullable|string',
             'image' => 'required|max:1024',
             'category' => 'required|array',
             "$mainLocal.title" => 'required|string',

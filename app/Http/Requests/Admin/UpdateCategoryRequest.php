@@ -29,7 +29,7 @@ class UpdateCategoryRequest extends FormRequest
         $mainLocal = array_shift($locals);
 
         $mainRule = [
-            'slug' => ['required', 'regex:/^[a-z0-9-]+$/', Rule::unique('categories')->ignore($this->category->id)]
+            'slug' => 'nullable|string'
             , "$mainLocal.name" => 'required|string',
             "$mainLocal.meta" => ['nullable', "required_with:$mainLocal.name", 'string'],
             'category_id' => 'nullable|numeric|exists:categories,id'
@@ -50,11 +50,11 @@ class UpdateCategoryRequest extends FormRequest
     public function attributes()
     {
 
-        $mainAttributes = ['slug' => lcfirst(__('Slug'))];
+        $mainAttributes = ['slug' => __('slug')];
 
         $AttributeFactory = RuleFactory::make([
-            '%name%' => __('Name'),
-            '%meta%' => __('Meta'),
+            '%name%' => __('name'),
+            '%meta%' => __('meta'),
         ]);
 
         return array_merge($mainAttributes, $AttributeFactory);

@@ -28,7 +28,7 @@ class AddCategoryReqest extends FormRequest
         $mainLocal = array_shift($locals);
 
         $mainRule = [
-            'slug' => 'required|regex:/^[a-z0-9-]+$/|unique:categories'
+            'slug' => 'nullable|string'
             , "$mainLocal.name" => 'required|string',
             "$mainLocal.meta" => "nullable|required_with:$mainLocal.name|string",
             'category_id' => 'nullable|numeric|exists:categories,id'

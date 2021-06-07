@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Scopes;
 use Astrotomic\Translatable\Translatable;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,10 +12,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory, Translatable, softDeletes, Scopes;
+    use HasFactory, Translatable, softDeletes, Scopes, Sluggable;
 
     public $translatedAttributes = ['title', 'description', 'body', 'meta', 'keywords'];
     protected $fillable = ['slug', 'status', 'user_id', 'image',];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'slug'
+            ]
+        ];
+    }
+
+    /**
+     * Return slug
+     * @param $value
+     * @return string
+     */
+    public function getSlugAttribute($value)
+    {
+
+        $locals = (config('translatable.locales'));
+        $mainLocal = array_shift($locals);
+        return !is_null($value) ? $value : $this->translate($mainLocal)->title;
+    }
 
     /**
      * Return author post.
