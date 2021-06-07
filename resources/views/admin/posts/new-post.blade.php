@@ -20,6 +20,11 @@
                         <h4 class="card-title">{{__('New Post')}}</h4>
                     </div>
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <div class="alert-body">
+                                <strong>{{ __('Tip') }}: </strong>{{__('The slug field is optional  if its null, the title of the main language will be selected as  the slug!')}}
+                            </div>
+                        </div>
                         <form action="{{ route('admin.posts.store') }}" method="post" class="form" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -32,15 +37,21 @@
                                 <div class="col-6 mb-1">
                                     <x-admin.input name="image" :label="__('Image')" :placeholder="__('Choose Image')" type="file" tabindex="3"/>
                                 </div>
-                                <div class="col-6 mb-1">
-                                    <div class="form-group mb-2">
-                                        <label for="category">{{__('Category')}}</label>
-                                        <select name="category[]" class="select2 form-control" multiple tabindex="4">
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}">{{ $category->name }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="col-6 mb-1 ">
+                                    <label for="category">{{__('Category')}}</label>
+                                    <select name="category[]" class="select2 form-control" multiple tabindex="4">
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error("category")
+                                    <div class="alert alert-danger mt-1">
+                                        <div class="alert-body">
+                                            <span>{{ $message }}</span>
+                                        </div>
                                     </div>
+                                    <div class="alert"></div>
+                                    @enderror
                                 </div>
                             </div>
                             <ul class="nav nav-tabs" role="tablist">
