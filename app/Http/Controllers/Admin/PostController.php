@@ -66,7 +66,10 @@ class PostController extends Controller
         // remove null fields in languages
         $request = $this->removeNullFields($request);
 
-        Post::create(array_merge($request->all(), ['user_id' => auth()->user()->id, 'image' => $fileName]));
+        $post = Post::create(array_merge($request->all(), ['user_id' => auth()->user()->id, 'image' => $fileName]));
+
+        $post->categories()->sync($request->category);
+
         return redirect()->route('admin.posts.index')->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('created')]));
 
     }
@@ -85,12 +88,15 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified post.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $breadcrumbs = $breadcrumbs = array_merge($this->breadcrumbs, ['Edit Post' => 'admin.posts.create']);
+        $categories = Category::orderBy('id', 'DESC')->active()->get();
+        $postCategories = $post->categories()->get()->pluck('id')->toArray();
+        return view('admin.posts.edit-post', compact(['post', 'breadcrumbs', 'categories', 'postCategories']));
     }
 
     /**
