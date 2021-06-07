@@ -45,16 +45,6 @@ class Post extends Model
     }
 
     /**
-     * Return author post.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
      * Return author_name post.
      *
      */
@@ -81,5 +71,27 @@ class Post extends Model
     {
         return 'uploads/posts/image/' . $value;
     }
+
+    /**
+     * Return author post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    /**
+     * Return posts of category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
 
 }

@@ -43,6 +43,11 @@ class Category extends Model implements TranslatableContract
         return !is_null($value) ? $value : $this->translate($mainLocal)->name;
     }
 
+    public function getParentNameAttribute()
+    {
+        return is_null($this->parent) ? null : $this->parent->name;
+    }
+
     /**
      * Return parent category.
      *
@@ -63,8 +68,15 @@ class Category extends Model implements TranslatableContract
         return $this->hasMany(Category::class);
     }
 
-    public function getParentNameAttribute()
+    /**
+     * Return posts of category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function posts()
     {
-        return is_null($this->parent) ? null : $this->parent->name;
+        return $this->belongsToMany(Post::class);
     }
+
+
 }
