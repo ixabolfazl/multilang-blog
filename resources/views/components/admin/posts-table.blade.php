@@ -23,8 +23,11 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->description }}</td>
                 <td>
-                    <a href="#"><span class="badge badge-pill badge-primary">Sport</span></a>
-                    <a href="#"><span class="badge badge-pill badge-danger">News</span></a>
+                    @foreach($post->categories as $category)
+                        <a href="{{ route('admin.categories.show',$category->id) }}">
+                            <span class="badge badge-pill badge-{{ ['primary','danger','warning','success','info','secondary'][$category->id%6] }}">{{ $category->name }}</span>
+                        </a>
+                    @endforeach
                 </td>
                 <td><a href="{{ route('admin.users.show',$post->user->id) }}">{{ $post->author }}</a></td>
 
