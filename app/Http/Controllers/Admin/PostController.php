@@ -28,8 +28,20 @@ class PostController extends Controller
     public function index()
     {
         $breadcrumbs = $this->breadcrumbs;
-        $posts = Post::orderBy('id', 'DESC')->with('user')->paginate(15);
+        $posts = Post::orderBy('id', 'DESC')->with(['user', 'categories'])->paginate(15);
         return view('admin.posts.posts', compact(['breadcrumbs', 'posts']));
+    }
+
+    /**
+     * Display a listing of Deleted Posts.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function trash()
+    {
+        $breadcrumbs = array_merge($this->breadcrumbs, ['Deleted Posts' => 'admin.posts.trash']);
+        $posts = Post::onlyTrashed()->with(['user', 'categories'])->paginate(15);
+        return view('admin.posts.deleted-post', compact(['breadcrumbs', 'posts']));
     }
 
     /**
