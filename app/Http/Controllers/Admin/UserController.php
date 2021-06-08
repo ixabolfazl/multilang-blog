@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,7 +21,7 @@ class UserController extends Controller
     /**
      * Display a listing of the Users.
      *
-     * @return View|Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -36,7 +33,7 @@ class UserController extends Controller
     /**
      * Display a listing of Deleted Users.
      *
-     * @return View|Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function trash()
     {
@@ -48,7 +45,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new Users.
      *
-     * @return View|Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -60,7 +57,7 @@ class UserController extends Controller
      * Store a newly created Users in storage.
      *
      * @param AddUserRequest $request
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(AddUserRequest $request)
     {
@@ -75,7 +72,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'image' => isset($fileName) ? 'uploads/profile/' . $fileName : Null,
+            'image' => isset($fileName) ? $fileName : Null,
             'role' => $request->role,
             'status' => $request->status,
             'password' => Hash::make($request->password),
@@ -87,7 +84,7 @@ class UserController extends Controller
      * Display Users.
      *
      * @param int $id
-     * @return View|Response
+     * @return void
      */
     public function show($id)
     {
@@ -98,7 +95,7 @@ class UserController extends Controller
      * Show the form for editing Users.
      *
      * @param User $user
-     * @return View|Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(User $user)
     {
@@ -111,7 +108,7 @@ class UserController extends Controller
      *
      * @param UpdateUserRequest $request
      * @param User $user
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -130,7 +127,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'image' => isset($fileName) ? 'uploads/profile/' . $fileName : Null,
+            'image' => isset($fileName) ? $fileName : Null,
             'role' => $request->role,
             'status' => $request->status,
             'password' => Hash::make($request->password),
@@ -143,7 +140,7 @@ class UserController extends Controller
      * Soft Delete Users from storage.
      *
      * @param User $user
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(User $user)
     {
@@ -156,12 +153,15 @@ class UserController extends Controller
      * Force Delete Users from storage.
      *
      * @param $id
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
 
     public function delete($id)
     {
         $user = User::withTrashed()->findOrFail($id);
+        if (File::exists(public_path($user->image))) {
+            File::delete(public_path($user->image));
+        }
         $user->forceDelete();
         return redirect()->back()->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
@@ -170,7 +170,7 @@ class UserController extends Controller
      * Restore Deleted Users.
      *
      * @param $id
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
 
     public function restore($id)
@@ -184,20 +184,15 @@ class UserController extends Controller
      * Change Status user from storage.
      *
      * @param User $user
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
 
     public function changeStatus(User $user)
     {
-        if ($user->status == 'Enable') {
-            $user->update([
-                'status' => 'Disable'
-            ]);
-        } else {
-            $user->update([
-                'status' => 'Enable'
-            ]);
-        }
+        $status = $user->status == 'Enable' ? 'Disable' : 'Enable';
+
+        $user->update(['status' => $status]);
+
         return redirect()->back()
             ->with('status', __('The status of :name was :atrribute successfully!',
                 ['atrribute' => __($user->status == 'Enable' ? 'enabled' : 'disabled'), 'name' => __('user')]));
@@ -208,7 +203,7 @@ class UserController extends Controller
      * Remove Image from storage.
      *
      * @param User $user
-     * @return RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse|void
      */
 
     public function removeImage(User $user)
