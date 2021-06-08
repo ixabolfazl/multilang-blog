@@ -44,13 +44,15 @@
                                             <option value="{{$category->id}}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error("category")
+                                    @error('category')
                                     <div class="alert alert-danger mt-1">
-                                        <div class="alert-body">
-                                            <span>{{ $message }}</span>
-                                        </div>
+                                        <div class="alert-body"><span>{{ $message }}</span></div>
                                     </div>
-                                    <div class="alert"></div>
+                                    @enderror
+                                    @error('category.*')
+                                    <div class="alert alert-danger mt-1">
+                                        <div class="alert-body"><span>{{ $message }}</span></div>
+                                    </div>
                                     @enderror
                                 </div>
                             </div>
@@ -90,7 +92,7 @@
                                     </div>
                                 @endforeach
                                 <div class="col-12">
-                                    <input type="submit" class="btn btn-primary waves-float waves-light" value="Create">
+                                    <input type="submit" class="btn btn-primary waves-float waves-light" value="{{__('Create')}}">
                                 </div>
                             </div>
                         </form>
