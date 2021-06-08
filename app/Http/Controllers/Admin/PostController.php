@@ -161,6 +161,38 @@ class PostController extends Controller
         return redirect()->back()->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
 
+    /**
+     * Force Delete Post from storage.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function delete($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        //remove image
+        if (File::exists(public_path($post->image))) {
+            File::delete(public_path($post->image));
+        }
+        $post->forceDelete();
+        return redirect()->back()->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('deleted')]));
+    }
+
+    /**
+     * Restore Deleted Post.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function restore($id)
+    {
+        $user = Post::withTrashed()->findOrFail($id);
+        $user->restore();
+        return redirect()->back()->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('restored')]));
+    }
+
 
     /**
      * upload the image in storage.
