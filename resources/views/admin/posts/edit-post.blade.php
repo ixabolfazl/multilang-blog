@@ -25,8 +25,9 @@
                                 <strong>{{ __('Tip') }}: </strong>{{__('The slug field is optional  if its null, the title of the main language will be selected as  the slug!')}}
                             </div>
                         </div>
-                        <form action="{{ route('admin.posts.store') }}" method="post" class="form" enctype="multipart/form-data">
+                        <form action="{{ route('admin.posts.update',$post->id) }}" method="post" class="form" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row">
                                 <div class="col-12 mb-1">
                                     <x-admin.checkbox-status name="status" :label="__('Status')" :checked="$post->status" tabindex="1"/>
@@ -71,13 +72,13 @@
                                     <div class="tab-pane {{ $loop->index!=0 ?: 'active' }}" id="{{$local}}" aria-labelledby="{{$local}}-tab" role="tabpanel">
                                         <div class="row">
                                             <div class="col-6 mb-1">
-                                                <x-admin.input name="{{$local}}[title]" :label="__('Title')" tabindex="5" :value="$post->title" :local="$local"/>
+                                                <x-admin.input name="{{$local}}[title]" :label="__('Title')" tabindex="5" value="{{ isset($post->translate($local)->title) ? $post->translate($local)->title : null }}" :local="$local"/>
                                             </div>
                                             <div class="col-6 mb-1">
-                                                <x-admin.textarea name="{{$local}}[description]" :label="__('Description').' '.__('(:first until :second character)',['first'=> 100,'second'=>200])" tabindex="6" rows="2" :value="$post->description" :local="$local"/>
+                                                <x-admin.textarea name="{{$local}}[description]" :label="__('Description').' '.__('(:first until :second character)',['first'=> 100,'second'=>200])" tabindex="6" rows="2" value="{{ isset($post->translate($local)->description) ? $post->translate($local)->description : null }}" :local="$local"/>
                                             </div>
                                             <div class="col-12 mb-1">
-                                                <x-admin.textarea name="{{$local}}[body]" :label="__('Text')" tabindex="7" rows="10" type="editor" :value="$post->body" :local="$local"/>
+                                                <x-admin.textarea name="{{$local}}[body]" :label="__('Text')" tabindex="7" rows="10" type="editor" value="{{ isset($post->translate($local)->body) ? $post->translate($local)->body : null }}" :local="$local"/>
                                             </div>
                                             <div class="col-12 mb-1">
                                                 <div class="divider">
@@ -85,10 +86,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 mb-1">
-                                                <x-admin.textarea name="{{$local}}[meta]" :label="__('Meta Description').' '.__('(:first until :second character)',['first'=> 100,'second'=>160])" tabindex="8" rows="2" :value="$post->meta" :local="$local"/>
+                                                <x-admin.textarea name="{{$local}}[meta]" :label="__('Meta Description').' '.__('(:first until :second character)',['first'=> 100,'second'=>160])" tabindex="8" rows="2" value="{{ isset($post->translate($local)->meta) ? $post->translate($local)->meta : null }}" :local="$local"/>
                                             </div>
                                             <div class="col-6 mb-1">
-                                                <x-admin.input name="{{$local}}[keywords]" :label="__('Keywords')" tabindex="9" :value="$post->keywords" :local="$local"/>
+                                                <x-admin.input name="{{$local}}[keywords]" :label="__('Keywords')" tabindex="9" value="{{ isset($post->translate($local)->keywords) ? $post->translate($local)->keywords : null }}" :local="$local"/>
                                             </div>
                                         </div>
                                     </div>
