@@ -193,6 +193,24 @@ class PostController extends Controller
         return redirect()->back()->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('restored')]));
     }
 
+    /**
+     * Change Status user from storage.
+     *
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function changeStatus(Post $post)
+    {
+        $status = $post->status == 'Enable' ? 'Disable' : 'Enable';
+
+        $post->update(['status' => $status]);
+
+        return redirect()->back()
+            ->with('status', __('The status of :name was :atrribute successfully!',
+                ['atrribute' => __($post->status == 'Enable' ? 'enabled' : 'disabled'), 'name' => __('post')]));
+    }
+
 
     /**
      * upload the image in storage.
