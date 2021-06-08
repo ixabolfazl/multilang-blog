@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddPostRequest;
+use App\Http\Requests\Admin\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -54,13 +55,13 @@ class PostController extends Controller
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
-            $fileName = $request->image->getClientOriginalName();
-
+            $base_name = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
+            $ext = $request->file('image')->getClientOriginalExtension();
+            $fileName = $base_name . '.' . $ext;
             while (File::exists(public_path('uploads/posts/image/' . $fileName))) {
                 $fileName = strtolower(Str::random(3)) . '-' . $fileName;
             }
             $request->image->move(public_path('uploads/posts/image'), $fileName);
-
         }
 
         // remove null fields in languages
@@ -102,24 +103,49 @@ class PostController extends Controller
     /**
      * Update the specified post in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param UpdatePostRequest $request
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            //remove old image
+            if (File::exists(public_path($post->image))) {
+                File::delete(public_path($post->image));
+            }
+
+            $base_name = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
+            $ext = $request->file('image')->getClientOriginalExtension();
+            $fileName = $base_name . '.' . $ext;
+            while (File::exists(public_path('uploads/posts/image/' . $fileName))) {
+                $fileName = strtolower(Str::random(3)) . '-' . $fileName;
+            }
+            $request->image->move(public_path('uploads/posts/image'), $fileName);
+        }
+
+        // remove null fields in languages
+        $request = $this->removeNullFields($request);
+
+        $post->update(array_merge($request->all(), isset($fileName) ? ['image' => $fileName] : []));
+
+        $post->categories()->sync($request->category);
+
+        return redirect()->route('admin.posts.index')->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('updated')]));
     }
 
     /**
      * Remove the specified post from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->back()->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
 
 
