@@ -40,8 +40,9 @@ class PostController extends Controller
     public function trash()
     {
         $breadcrumbs = array_merge($this->breadcrumbs, ['Deleted Posts' => 'admin.posts.trash']);
-        $posts = Post::onlyTrashed()->with(['user', 'categories'])->paginate(15);
+        $posts = Post::onlyTrashed()->orderBy('deleted_at', 'desc')->with(['user', 'categories'])->paginate(15);
         return view('admin.posts.deleted-post', compact(['breadcrumbs', 'posts']));
+
     }
 
     /**
