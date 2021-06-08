@@ -31,6 +31,7 @@ class AddPostRequest extends FormRequest
             'slug' => 'nullable|string',
             'image' => 'required|max:1024',
             'category' => 'required|array',
+            'category.*' => 'exists:categories,id',
             "$mainLocal.title" => 'required|string',
             "$mainLocal.description" => 'required|string',
             "$mainLocal.body" => 'required|string',
@@ -70,5 +71,17 @@ class AddPostRequest extends FormRequest
         ]);
 
         return array_merge($mainAttributes, $AttributeFactory);
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'category.*.exists' => __('validation.exists', ['attribute' => __('category')]),
+        ];
     }
 }
