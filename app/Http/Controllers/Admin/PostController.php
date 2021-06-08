@@ -225,9 +225,15 @@ class PostController extends Controller
         if ($validator->fails()) {
             return response(['error' => ['message' => $validator->errors()->first()]]);
         } elseif ($request->hasFile('upload') && $request->file('upload')->isValid()) {
-            //upload image
-            $fileName = strtolower(Str::random(10)) . time() . "." . $request->upload->extension();
+
+            $base_name = pathinfo($request->upload->getClientOriginalName(), PATHINFO_FILENAME);
+            $ext = $request->file('image')->getClientOriginalExtension();
+            $fileName = $base_name . '.' . $ext;
+            while (File::exists(public_path('uploads/posts/' . $fileName))) {
+                $fileName = strtolower(Str::random(3)) . '-' . $fileName;
+            }
             $request->upload->move(public_path('uploads/posts'), $fileName);
+
             $url = asset('uploads/posts/' . $fileName);
             return response(['url' => $url]);
         }
