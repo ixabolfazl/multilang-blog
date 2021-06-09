@@ -25,7 +25,7 @@ class Input extends Component
      * @param $type
      * @param $local
      */
-    public function __construct($name, $label, $placeholder = null, $tabindex, $value = null, $type = 'text', $local = null)
+    public function __construct($name, $label = null, $placeholder = null, $tabindex, $value = null, $type = 'text', $local = null)
     {
         $this->name = $name;
         $this->label = $label;

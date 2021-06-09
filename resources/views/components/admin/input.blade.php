@@ -1,8 +1,10 @@
 <div class="form-group">
+    @if($label!=null)
     <div class="d-flex justify-content-between">
         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
         {{ $slot }}
     </div>
+    @endif
     @if($type=='file')
         <div class="custom-file">
             <input type="file" class="custom-file-input @error(str_replace("[",".",trim($name,"]"))) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}" tabindex="{{ $tabindex }}">
