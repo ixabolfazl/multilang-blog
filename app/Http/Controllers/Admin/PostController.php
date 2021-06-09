@@ -23,12 +23,17 @@ class PostController extends Controller
     /**
      * Display a listing of the post.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumbs = $this->breadcrumbs;
-        $posts = Post::orderBy('id', 'DESC')->with(['user', 'categories'])->paginate(15);
+        $postsQuery = Post::orderBy('id', 'DESC')->with(['user', 'categories']);
+        if (isset($request->search)) {
+            $postsQuery->whereTranslationLike('title', "%{$request->search}%");
+        }
+        $posts = $postsQuery->paginate(15);
         return view('admin.posts.posts', compact(['breadcrumbs', 'posts']));
     }
 

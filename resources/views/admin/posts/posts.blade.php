@@ -21,8 +21,23 @@
                         <h4 class="card-title">{{__('Posts')}}</h4>
                         <a href="{{ route('admin.posts.create') }}" class="btn btn-primary waves-effect waves-float waves-light">{{__('New Post')}}</a>
                     </div>
+
+                    <div class="card-body">
+                        <form action="{{ route('admin.posts.index') }}">
+                            <div class="row">
+                                <div class="col-xl-3 col-md-4 col-sm-6 col-12 pr-sm-0">
+                                    <div class="form-group">
+                                        <x-admin.input name="search" placeholder="{{ __('Search') }}" value="{{ request()->search ? request()->search : null }}" tabindex="1"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-12">
+                                    <input type="submit" class="btn btn-outline-primary waves-effect" value="{{ __('Search') }}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <x-admin.posts-table :posts="$posts"/>
-                    {{ $posts->links('admin.layouts.pagination') }}
+                    {{ $posts->appends(request()->query())->links('admin.layouts.pagination') }}
                 </div>
             </div>
         </div>
