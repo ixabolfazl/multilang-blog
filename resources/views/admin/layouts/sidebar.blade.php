@@ -57,19 +57,13 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a class="d-flex align-items-center" href="#"><i data-feather='layers'></i>
+            <li class="nav-item {{ !request()->routeIs(app()->getLocale().'.admin.categories.index') ?: 'active'}}">
+                <a class="d-flex align-items-center" href="{{ route('admin.categories.index') }}"><i data-feather='layers'></i>
                     <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Categories')}}</span> </a>
-                <ul class="menu-content">
-                    <li class="{{ !request()->routeIs(app()->getLocale().'.admin.categories.index') ?: 'active'}}">
-                        <a class="d-flex align-items-center" href="{{ route('admin.categories.index') }}"><i data-feather="circle"></i>
-                            <span class="menu-item" data-i18n="Collapsed Menu">{{__('Categories')}}</span></a>
-                    </li>
-                    <li class="{{ !request()->routeIs(app()->getLocale().'.admin.categories.create') ?: 'active'}}">
-                        <a class="d-flex align-items-center" href="{{ route('admin.categories.create') }}"><i data-feather="circle"></i>
-                            <span class="menu-item" data-i18n="Collapsed Menu">{{__('New Category')}}</span></a>
-                    </li>
-                </ul>
+            </li>
+            <li class="nav-item {{ !request()->routeIs(app()->getLocale().'.admin.comments.index') ?: 'active'}}">
+                <a class="d-flex align-items-center" href="{{ route('admin.comments.index') }}"><i data-feather='layers'></i>
+                    <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Comments')}}</span> </a>
             </li>
 
         </ul>
