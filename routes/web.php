@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommentsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
@@ -58,7 +59,14 @@ Route::localized(function () {
         Route::group(['as' => 'categories.', 'prefix' => 'categories'], function () {
             Route::get('{category}/status', [CategoryController::class, 'changeStatus'])->name('status');
         });
-        Route::resource('categories', CategoryController::class);
+        Route::resource('categories', CategoryController::class)->except(['create']);
+
+
+        //comments routes
+        Route::group(['as' => 'comments.', 'prefix' => 'comments'], function () {
+            Route::get('{comment}/status', [CommentsController::class, 'changeStatus'])->name('status');
+        });
+        Route::resource('comments', CommentsController::class)->except(['create']);
 
 
     });
