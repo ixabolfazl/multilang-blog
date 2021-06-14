@@ -31,11 +31,24 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Comment $comment
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, Comment $comment)
     {
-        //
+        $request->validate([
+            'comment' => 'required|string',
+        ]);
+
+        Comment::create([
+            'comment' => $request->comment,
+            'comment_id' => $comment->id,
+            'post_id' => $comment->post->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        return redirect()->route('admin.comments.index')
+            ->with('status', __('The comment was :atrribute successfully!', ['atrribute' => __('replied ')]));
     }
 
     /**
