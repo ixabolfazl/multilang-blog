@@ -47,6 +47,6 @@ class User extends Authenticatable
      */
     public function getImageAttribute($value)
     {
-        return 'uploads/profile/' . $value;
+        return is_null($value) ? null : 'uploads/profile/' . $value;
     }
 }
