@@ -15,7 +15,7 @@ class CommentController extends Controller
     ];
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the comments.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
@@ -26,15 +26,6 @@ class CommentController extends Controller
         return view('admin.comments.comments', compact(['breadcrumbs', 'comments']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -50,12 +41,13 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Admin\Comments $comments
-     * @return \Illuminate\Http\Response
+     * @param Comment $comment
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(Comment $comments)
+    public function show(Comment $comment)
     {
-        //
+        $breadcrumbs = array_merge($this->breadcrumbs, ['Show Comment' => 'admin.categories.edit']);
+        return view('admin.comments.show-comment', compact(['comment', 'breadcrumbs']));
     }
 
     /**
