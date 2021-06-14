@@ -3,19 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Comments;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
-class CommentsController extends Controller
+class CommentController extends Controller
 {
+
+    public $breadcrumbs = [
+        'Dashboard' => 'admin.dashboard',
+        'Comments' => 'admin.comments.index',
+    ];
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $breadcrumbs = $this->breadcrumbs;
+        $comments = Comment::orderBy('id', 'DESC')->with(['user', 'replies', 'post'])->withCount('replies')->paginate(15);
+        return view('admin.comments.comments', compact(['breadcrumbs', 'comments']));
     }
 
     /**
@@ -45,7 +53,7 @@ class CommentsController extends Controller
      * @param \App\Models\Admin\Comments $comments
      * @return \Illuminate\Http\Response
      */
-    public function show(Comments $comments)
+    public function show(Comment $comments)
     {
         //
     }
@@ -56,7 +64,7 @@ class CommentsController extends Controller
      * @param \App\Models\Admin\Comments $comments
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comments $comments)
+    public function edit(Comment $comments)
     {
         //
     }
@@ -68,7 +76,7 @@ class CommentsController extends Controller
      * @param \App\Models\Admin\Comments $comments
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comments $comments)
+    public function update(Request $request, Comment $comments)
     {
         //
     }
@@ -79,7 +87,7 @@ class CommentsController extends Controller
      * @param \App\Models\Admin\Comments $comments
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comments $comments)
+    public function destroy(Comment $comments)
     {
         //
     }
