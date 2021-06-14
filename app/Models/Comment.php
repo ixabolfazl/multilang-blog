@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -59,6 +60,15 @@ class Comment extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    /**
+     * Return local created_at comment.
+     *
+     */
+    public function getDateAttribute()
+    {
+        return app()->getLocale() == 'fa' ? Verta::instance($this->created_at)->format('Y/m/d') : ($this->created_at)->format('Y/m/d');
     }
 
 }
