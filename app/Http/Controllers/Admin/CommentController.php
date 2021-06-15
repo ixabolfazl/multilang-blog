@@ -103,4 +103,22 @@ class CommentController extends Controller
         $comment->delete();
         return redirect()->back()->with('status', __('The comment was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
+
+
+    /**
+     * Change Status Ctegory from storage.
+     *
+     * @param Comment $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeStatus(Comment $comment)
+    {
+        $status = !$comment->is_approved;
+
+        $comment->update(['is_approved' => $status]);
+
+        return redirect()->back()
+            ->with('status', __('The status of :name was :atrribute successfully!',
+                ['atrribute' => __($comment->is_approved ? 'approved' : 'unapproved'), 'name' => __('Comment')]));
+    }
 }
