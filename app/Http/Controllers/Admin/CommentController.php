@@ -41,6 +41,7 @@ class CommentController extends Controller
         ]);
 
         Comment::create([
+            'is_approved' => true,
             'comment' => $request->comment,
             'comment_id' => $comment->id,
             'post_id' => $comment->post->id,
