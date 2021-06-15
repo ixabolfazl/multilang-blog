@@ -93,13 +93,14 @@ class CommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified comment from storage.
      *
-     * @param \App\Models\Admin\Comments $comments
-     * @return \Illuminate\Http\Response
+     * @param Comment $comment
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Comment $comments)
+    public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        return redirect()->back()->with('status', __('The comment was :atrribute successfully!', ['atrribute' => __('deleted')]));
     }
 }
