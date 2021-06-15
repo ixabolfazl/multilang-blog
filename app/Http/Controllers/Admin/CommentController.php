@@ -28,9 +28,9 @@ class CommentController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created comment in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -48,42 +48,48 @@ class CommentController extends Controller
         ]);
 
         return redirect()->route('admin.comments.index')
-            ->with('status', __('The comment was :atrribute successfully!', ['atrribute' => __('replied ')]));
+            ->with('status', __('The comment was :atrribute successfully!', ['atrribute' => __('replied')]));
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified comment.
      *
      * @param Comment $comment
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Comment $comment)
     {
-        $breadcrumbs = array_merge($this->breadcrumbs, ['Show Comment' => 'admin.categories.edit']);
+        $breadcrumbs = array_merge($this->breadcrumbs, ['Show Comment' => 'admin.comments.edit']);
         return view('admin.comments.show-comment', compact(['comment', 'breadcrumbs']));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified comment.
      *
-     * @param \App\Models\Admin\Comments $comments
-     * @return \Illuminate\Http\Response
+     * @param Comment $comment
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(Comment $comments)
+    public function edit(Comment $comment)
     {
-        //
+        $breadcrumbs = array_merge($this->breadcrumbs, ['Edit Comment' => 'admin.comments.edit']);
+        return view('admin.comments.edit-comment', compact(['comment', 'breadcrumbs']));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified comment in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Admin\Comments $comments
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Comment $comment
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Comment $comments)
+    public function update(Request $request, Comment $comment)
     {
-        //
+        $request->validate(['comment' => 'required|string']);
+
+        $comment->update(['comment' => $request->comment]);
+
+        return redirect()->route('admin.comments.index')
+            ->with('status', __('The comment was :atrribute successfully!', ['atrribute' => __('updated')]));
     }
 
     /**
