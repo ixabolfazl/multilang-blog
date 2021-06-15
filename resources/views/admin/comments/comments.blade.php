@@ -55,7 +55,7 @@
                                     <td>
                                         <form action="{{ route('admin.comments.destroy',$comment->id) }}" id="destroy-comment-{{$comment->id}}" method="post">
                                             <a href="{{ route('admin.comments.show',$comment->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('View & Reply') }}"><span class="badge badge-pill badge-info"><i data-feather='message-square'></i></span></a>
-                                            <a href="{{ route('admin.comments.status',$comment->id) }}" data-toggle="tooltip" data-placement="top" title="{{__($comment->is_approved ? 'Unapprove' :'Approve')}}"><span class="badge badge-pill badge-warning"><i data-feather='{{$comment->is_approved?'eye-off':'check'}}'></i></span></a>
+                                            <a href="{{ route('admin.comments.status',$comment->id) }}" data-toggle="tooltip" data-placement="top" title="{{__($comment->is_approved ? 'Unapprove' :'Approve')}}"><span class="badge badge-pill badge-{{$comment->is_approved?'warning':'success'}}"><i data-feather='{{$comment->is_approved?'eye-off':'check'}}'></i></span></a>
                                             <a href="{{ route('admin.comments.edit',$comment->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Edit') }}"><span class="badge badge-pill badge-secondary"><i data-feather="edit"></i></span></a>
                                             @csrf
                                             @method('DELETE')
