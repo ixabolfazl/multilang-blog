@@ -28,7 +28,7 @@ class Textarea extends Component
      * @param string $local
      * @param int $rows
      */
-    public function __construct($name, $label, $placeholder = null, $tabindex, $value = null, $type = 'default', $rows = 2, $local = null)
+    public function __construct($name, $label = null, $placeholder = null, $tabindex, $value = null, $type = 'default', $rows = 2, $local = null)
     {
         $this->name = $name;
         $this->label = $label;
