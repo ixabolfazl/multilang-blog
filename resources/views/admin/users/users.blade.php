@@ -8,12 +8,10 @@
 @section('page-style-ltr')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css-ltr/plugins/extensions/ext-component-sweet-alerts.css") }}">
 @endsection
-@section('title','')
-
+@section('title',__(array_key_last($breadcrumbs)))
 @section('breadcrumb')
     <x-admin.breadcrumb :breadcrumbs="$breadcrumbs"/>
 @endsection
-
 @section('content')
     <div class="content-body">
         <div class="row">

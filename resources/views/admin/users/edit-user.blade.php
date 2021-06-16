@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')@section('title','')
+@extends('admin.layouts.app')
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/vendors/css/extensions/sweetalert2.min.css") }}">
 @endsection
@@ -8,6 +8,7 @@
 @section('page-style-ltr')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css-ltr/plugins/extensions/ext-component-sweet-alerts.css") }}">
 @endsection
+@section('title',__(array_key_last($breadcrumbs)))
 @section('breadcrumb')
     <x-admin.breadcrumb :breadcrumbs="$breadcrumbs"/>
 @endsection

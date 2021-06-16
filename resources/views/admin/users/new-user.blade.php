@@ -1,8 +1,8 @@
-@extends('admin.layouts.app')@section('title','')
-
+@extends('admin.layouts.app')
 @section('breadcrumb')
     <x-admin.breadcrumb :breadcrumbs="$breadcrumbs"/>
 @endsection
+@section('title',__(array_key_last($breadcrumbs)))
 @section('content')
     <div class="content-body">
         <div class="row">
