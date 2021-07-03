@@ -62,7 +62,7 @@
                     <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Categories')}}</span> </a>
             </li>
             <li class="nav-item {{ !request()->routeIs(app()->getLocale().'.admin.comments.index') ?: 'active'}}">
-                <a class="d-flex align-items-center" href="{{ route('admin.comments.index') }}"><i data-feather='layers'></i>
+                <a class="d-flex align-items-center" href="{{ route('admin.comments.index') }}"><i data-feather='message-square'></i>
                     <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Comments')}}</span> </a>
             </li>
 
