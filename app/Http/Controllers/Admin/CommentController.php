@@ -19,10 +19,18 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumbs = $this->breadcrumbs;
-        $comments = Comment::orderBy('id', 'DESC')->with(['user', 'replies', 'post'])->withCount('replies')->paginate(15);
+        $query = Comment::latest()->with(['user', 'replies', 'post'])->withCount('replies');
+        if (isset($request->approved)) {
+            if ($request->approved == 1) {
+                $query->where('is_approved', 1);
+            } elseif ($request->approved == 0) {
+                $query->where('is_approved', 0);
+            }
+        }
+        $comments = $query->paginate(15);
         return view('admin.comments.comments', compact(['breadcrumbs', 'comments']));
     }
 

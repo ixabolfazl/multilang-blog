@@ -19,7 +19,25 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">{{__('Comments')}}</h4>
+                        <ul class="nav nav-pills" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center @if(!isset(request()->approved)) active @endif" href="{{ route('admin.comments.index') }}">
+                                    <i data-feather='message-square'></i><span class="d-none d-sm-block">{{__('All Comments')}}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center @if(request()->approved=='1') active @endif" href="{{ route('admin.comments.index',['approved'=>1]) }}">
+                                    <i data-feather='message-square'></i><span class="d-none d-sm-block">{{__('Approved Comments')}}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center @if(request()->approved=='0') active @endif" href="{{ route('admin.comments.index',['approved'=>0]) }}">
+                                    <i data-feather='message-square'></i><span class="d-none d-sm-block">{{__('Not approved Comments')}}</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
