@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,7 @@ Route::localized(function () {
 
 
     Route::get('/', function () {
-        return view('admin.posts.new-post');
+        return view('app.index');
     })->name('index');
 
 
@@ -43,6 +44,8 @@ Route::localized(function () {
             Route::get('{id}/restore', [UserController::class, 'restore'])->name('restore');
         });
         Route::resource('users', UserController::class);
+        //profile routes
+        Route::resource('profile', ProfileController::class)->only(['index', 'update']);
 
         //posts routes
         Route::post('upload-image', [PostController::class, 'upload'])->name('upload-image');
