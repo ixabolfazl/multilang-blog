@@ -29,8 +29,15 @@
                                         <x-admin.input name="search" placeholder="{{ __('Search') }}" value="{{ request()->search ? request()->search : null }}" tabindex="1"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-12">
-                                    <input type="submit" class="btn btn-outline-primary waves-effect" value="{{ __('Search') }}">
+                                <div class="col-sm-4 col-12">
+                                    <button type="submit" class="btn btn-icon rounded-circle btn-outline-primary waves-effect">
+                                        <i data-feather='search'></i></button>
+                                    @if(request()->has('search'))
+                                        <a href="{{ route('admin.categories.show',$category->id) }}">
+                                            <div class="btn btn-icon rounded-circle btn-primary waves-effect">
+                                                <i data-feather='x'></i></div>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </form>
