@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.app')
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/vendors/css/extensions/sweetalert2.min.css") }}">
@@ -20,10 +21,30 @@
                     <div class="card-header">
                         <h4 class="card-title">{{__('Edit User')}}</h4>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
+                    <div class="card-body user-card">
+                        @if($user->image)
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-12 d-flex flex-column justify-content-between border-container-lg m-2">
+                                    <div class="user-avatar-section">
+                                        <div class="d-flex justify-content-start">
+                                            <img class="img-fluid rounded" src="{{ asset($user->image) }}" height="104" width="104" alt="User avatar">
+                                            <div class="d-flex flex-column ml-1">
+                                                <div class="user-info mb-1">
+                                                    <h4 class="mb-0">{{ $user->name }}</h4>
+                                                    <span class="card-text">{{ $user->email }}</span>
+                                                </div>
+                                                <div class="d-flex flex-wrap">
+                                                    <a href="{{ route('admin.users.removeImage',$user->id) }}" class="btn btn-outline-danger ml-1 waves-effect">{{__('Delete Image')}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <form class="mt-2" action="{{ route('admin.users.update',$user->id) }}" method="post" enctype="multipart/form-data">
+                                </div>
+                            </div>
+                        @endif
+                        <div class="row">
+                            <form class="m-2" action="{{ route('admin.users.update',$user->id) }}" method="post" enctype="multipart/form-data">
                                 <div class="row">
                                     @csrf
                                     @method('PUT')
@@ -56,22 +77,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="row">
-                                            <div class="col-md-{{ $user->image ? '6' : '12' }}">
-                                                <x-admin.input name="image" :label="__('Image')" :placeholder="__('Choose Image')" type="file" tabindex="6"/>
-                                            </div>
-                                            @if($user->image)
-                                                <div class="col-md-2">
-                                                    <div class="avatar avatar-xl">
-                                                        <img src="{{ asset($user->image) }}" alt="avatar">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <a class="btn btn-outline-primary btn-sm waves-effect round" href="{{ route('admin.users.removeImage',$user->id) }}">{{ __('Delete') }}</a>
-                                                </div>
-                                            @endif
-
-                                        </div>
+                                        <x-admin.input name="image" :label="__('Image')" :placeholder="__('Choose Image')" type="file" tabindex="6"/>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row">
@@ -88,7 +94,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
 
 
@@ -116,4 +121,5 @@
         </script>
     @endif
 @endsection
+
 
