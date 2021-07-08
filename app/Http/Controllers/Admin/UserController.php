@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -83,12 +85,24 @@ class UserController extends Controller
     /**
      * Display Users.
      *
-     * @param int $id
-     * @return void
+     * @param User $user
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
      */
-    public function show($id)
+    public function show(User $user, Request $request)
     {
-        //
+        if ($user->Role == "User") {
+            abort(404);
+        }
+
+        $breadcrumbs = array_merge($this->breadcrumbs, ['User' => '', $user->name => '']);
+        $postsQuery = Post::latest()->with(['user', 'categories'])->where('user_id', $user->id);
+        if (isset($request->search)) {
+            $postsQuery->whereTranslationLike('title', "%{$request->search}%");
+        }
+        $posts = $postsQuery->paginate(15);
+        return view('admin.users.user-posts', compact(['breadcrumbs', 'posts', 'user']));
+
     }
 
     /**
