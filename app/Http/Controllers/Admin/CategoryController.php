@@ -42,7 +42,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param AddCategoryReqest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(AddCategoryReqest $request)
@@ -57,18 +57,25 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Category $category, Request $request)
     {
-        //
+        $breadcrumbs = array_merge($this->breadcrumbs, [$category->name => '']);
+        $postsQuery = $category->posts()->latest()->with(['user', 'categories']);
+        if (isset($request->search)) {
+            $postsQuery->whereTranslationLike('title', "%{$request->search}%");
+        }
+        $posts = $postsQuery->paginate(15);
+        return view('admin.categories.category-posts', compact(['breadcrumbs', 'posts', 'category']));
     }
 
     /**
      * Show the form for editing the Category resource.
      *
-     * @param \App\Models\Category $category
+     * @param Category $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Category $category)
@@ -81,8 +88,8 @@ class CategoryController extends Controller
     /**
      * Update the specified Category in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Category $category
+     * @param UpdateCategoryRequest $request
+     * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateCategoryRequest $request, Category $category)
@@ -96,8 +103,8 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)
     {
