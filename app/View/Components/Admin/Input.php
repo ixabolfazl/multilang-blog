@@ -14,18 +14,21 @@ class Input extends Component
     public $value;
     public $local;
     public $dir;
+    public $disabled;
 
     /**
      * Create a new component instance.
      *
      * @param $name
-     * @param $label
-     * @param $placeholder
+     * @param null $label
+     * @param null $placeholder
      * @param $tabindex
-     * @param $type
-     * @param $local
+     * @param null $value
+     * @param string $type
+     * @param null $local
+     * @param $disabled
      */
-    public function __construct($name, $label = null, $placeholder = null, $tabindex, $value = null, $type = 'text', $local = null)
+    public function __construct($name, $label = null, $placeholder = null, $tabindex, $value = null, $type = 'text', $local = null, $disabled = false)
     {
         $this->name = $name;
         $this->label = $label;
@@ -33,8 +36,10 @@ class Input extends Component
         $this->tabindex = $tabindex;
         $this->type = $type;
         $this->value = $value;
+        $this->disabled = $disabled;
         $this->local = $local != null ? $local : app()->getLocale();
         $this->dir = $this->local == 'fa' ? 'rtl' : 'ltr';
+
     }
 
     /**
