@@ -65,6 +65,10 @@
                 <a class="d-flex align-items-center" href="{{ route('admin.comments.index') }}"><i data-feather='message-square'></i>
                     <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Comments')}}</span> </a>
             </li>
+            <li class="nav-item {{ !request()->routeIs(app()->getLocale().'.admin.profile.index') ?: 'active'}}">
+                <a class="d-flex align-items-center" href="{{ route('admin.profile.index') }}"><i data-feather='user'></i>
+                    <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Profile')}}</span> </a>
+            </li>
 
         </ul>
     </div>
