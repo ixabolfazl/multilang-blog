@@ -58,7 +58,7 @@
                                     <td>{{ $loop->index+1 }}</td>
                                     <td>{{ Str::limit($comment->comment, 50) }}</td>
                                     <td>
-                                        <a href="{{ route('admin.users.edit',$comment->post->id)}}">{{ Str::limit($comment->post->title, 50) }}</a>
+                                        <a href="{{ route('admin.posts.edit',$comment->post->id)}}">{{ Str::limit($comment->post->title, 50) }}</a>
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.users.edit',$comment->user->id)}}">{{ $comment->user->name }}</a>
