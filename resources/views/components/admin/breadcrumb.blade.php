@@ -7,6 +7,8 @@
                     @foreach($breadcrumbs as $breadcrumb => $route)
                         @if($loop->last)
                             <li class="breadcrumb-item active">{{ __($breadcrumb) }}</li>
+                        @elseif($route=="")
+                            <li class="breadcrumb-item">{{ __($breadcrumb) }}</li>
                         @else
                             <li class="breadcrumb-item">
                                 <a href="{{ route($route) }}">{{ __($breadcrumb) }}</a>
