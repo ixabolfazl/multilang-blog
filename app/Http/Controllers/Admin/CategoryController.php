@@ -121,11 +121,10 @@ class CategoryController extends Controller
 
     public function changeStatus(Category $category)
     {
-        if ($category->status == 'Enable') {
-            $category->update(['status' => 'Disable']);
-        } else {
-            $category->update(['status' => 'Enable']);
-        }
+        $status = $category->status == 'Enable' ? 'Disable' : 'Enable';
+
+        $category->update(['status' => $status]);
+
         return redirect()->back()
             ->with('status', __('The status of :name was :atrribute successfully!',
                 ['atrribute' => __($category->status == 'Enable' ? 'enabled' : 'disabled'), 'name' => __('Category')]));
