@@ -35,12 +35,11 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         @endif
                         <div class="row">
-                            <form class="m-2" action="{{ route('admin.profile.update',$user->id) }}" method="post" enctype="multipart/form-data">
+                            <form class="m-2" action="{{ route('admin.profile.update') }}" method="post" enctype="multipart/form-data">
                                 <div class="row">
                                     @csrf
                                     @method('PUT')
@@ -67,10 +66,7 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
-
-
                     </div>
                 </div>
             </div>

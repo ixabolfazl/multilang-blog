@@ -45,7 +45,8 @@ Route::localized(function () {
         });
         Route::resource('users', UserController::class);
         //profile routes
-        Route::resource('profile', ProfileController::class)->only(['index', 'update']);
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
         //posts routes
         Route::post('upload-image', [PostController::class, 'upload'])->name('upload-image');
