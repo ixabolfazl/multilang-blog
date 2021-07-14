@@ -24,21 +24,24 @@
                     <div class="card-body">
                         <form action="{{ route('admin.categories.show',$category->id) }}">
                             <div class="row">
-                                <div class="col-xl-3 col-md-4 col-sm-6 col-12 pr-sm-0">
+                                <div class="col-9">
                                     <div class="form-group">
                                         <x-admin.input name="search" placeholder="{{ __('Search') }}" value="{{ request()->search ? request()->search : null }}" tabindex="1"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 col-12">
-                                    <button type="submit" class="btn btn-icon rounded-circle btn-outline-primary waves-effect">
-                                        <i data-feather='search'></i></button>
-                                    @if(request()->has('search'))
-                                        <a href="{{ route('admin.categories.show',$category->id) }}">
-                                            <div class="btn btn-icon rounded-circle btn-primary waves-effect">
-                                                <i data-feather='x'></i></div>
-                                        </a>
-                                    @endif
+                                <div class="col-3">
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-icon rounded-circle btn-outline-primary waves-effect">
+                                            <i data-feather='search'></i></button>
+                                        @if(request()->has('search') and request()->search !="")
+                                            <a href="{{ route('admin.categories.show',$category->id) }}">
+                                                <div class="btn btn-icon rounded-circle btn-primary waves-effect ">
+                                                    <i data-feather='x'></i></div>
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
+
                             </div>
                         </form>
                     </div>
