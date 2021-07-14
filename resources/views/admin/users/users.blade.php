@@ -21,9 +21,9 @@
                         <h4 class="card-title">{{__('Users')}}</h4>
                         <a href="{{ route('admin.users.create') }}" class="btn btn-primary waves-effect waves-float waves-light">{{__('New User')}}</a>
                     </div>
-                    <div class="table-responsive">
-                        <x-admin.users-table :users="$users"/>
-                    </div>
+
+                    <x-admin.users-table :users="$users"/>
+
                     {{ $users->links('admin.layouts.pagination') }}
                 </div>
             </div>
