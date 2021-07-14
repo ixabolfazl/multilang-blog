@@ -12,62 +12,132 @@
     <div class="content-body">
 
         <div class="row match-height">
-            @include('admin.layouts.Statistics')
-        </div>
-        <section id="apexchart">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header d-flex flex-sm-row flex-column justify-content-md-between align-items-start justify-content-start">
-                            <div>
-                                <h4 class="card-title mb-25">Last Month Views</h4>
+            <div class="col-xl-12 col-md-6 col-12">
+                <div class="card card-statistics">
+                    <div class="card-header">
+                        <h4 class="card-title">{{__('Statistics')}}</h4>
+                    </div>
+                    <div class="card-body statistics-body">
+                        <div class="row">
+                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
+                                <div class="media">
+                                    <div class="avatar bg-light-primary mr-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="file-text" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body my-auto">
+                                        <h4 class="font-weight-bolder mb-0">{{ $posts_count }}</h4>
+                                        <p class="card-text font-small-3 mb-0">{{__('Posts')}}</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div id="line-chart"></div>
+                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
+                                <div class="media">
+                                    <div class="avatar bg-light-info mr-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="eye" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body my-auto">
+                                        <h4 class="font-weight-bolder mb-0">1200k</h4>
+                                        <p class="card-text font-small-3 mb-0">{{__('Views')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
+                                <div class="media">
+                                    <div class="avatar bg-light-danger mr-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="message-square" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body my-auto">
+                                        <h4 class="font-weight-bolder mb-0">{{ $comments_count }}</h4>
+                                        <p class="card-text font-small-3 mb-0">{{__('Comments')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
+                                <div class="media">
+                                    <div class="avatar bg-light-warning mr-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="users" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body my-auto">
+                                        <h4 class="font-weight-bolder mb-0">{{ $users_count }}</h4>
+                                        <p class="card-text font-small-3 mb-0">{{__('Users')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-sm-0">
+                                <div class="media">
+                                    <div class="avatar bg-light-success mr-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="layers" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body my-auto">
+                                        <h4 class="font-weight-bolder mb-0">{{ $category_count }}</h4>
+                                        <p class="card-text font-small-3 mb-0">{{__('Categories')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-sm-0">
+                                <div class="media">
+                                    <div class="avatar bg-light-secondary mr-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="trash" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body my-auto">
+                                        <h4 class="font-weight-bolder mb-0">{{$deleted_posts_count}}</h4>
+                                        <p class="card-text font-small-3 mb-0">{{__('Deleted Posts')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-
             </div>
-        </section>
+        </div>
 
         <div class="row match-height">
             <div class="col-md-12">
-                <div class="card text-center mb-3">
+                <div class="card">
                     <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs ml-0" id="nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="recentposts-tab" data-toggle="tab" href="#recentposts" role="tab" aria-controls="home" aria-selected="true">Recent Posts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="topposts-tab" data-toggle="tab" href="#topposts" role="tab" aria-controls="profile" aria-selected="false">Top Posts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="mostviewpost-tab" data-toggle="tab" href="#mostviewpost" role="tab" aria-controls="profile" aria-selected="false">Most View Post</a>
-                            </li>
-                        </ul>
+                        <h4 class="card-title">{{__('Last Posts')}}</h4>
                     </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade active show" id="recentposts" role="tabpanel" aria-labelledby="recentposts-tab">
-                                @include('admin.layouts.posts-table')
-                            </div>
-                            <div class="tab-pane fade" id="topposts" role="tabpanel" aria-labelledby="topposts-tab">
-                                <div class="table-responsive">
-                                    @include('admin.layouts.posts-table')
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="mostviewpost" role="tabpanel" aria-labelledby="mostviewpost-tab">
-                                <div class="table-responsive">
-                                    @include('admin.layouts.posts-table')
-                                </div>
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <x-admin.posts-table :posts="$posts"/>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{__('Last Comments')}}</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <x-admin.comments-table :comments="$comments"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{__('Last Users')}}</h4>
+                    </div>
+                    <x-admin.users-table :users="$users"/>
 
+                </div>
+            </div>
         </div>
 
     </div>
