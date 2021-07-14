@@ -8,6 +8,10 @@
 @section('page-style-ltr')
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css-ltr/plugins/charts/chart-apex.css") }}">
 @endsection
+@section('title',__(array_key_last($breadcrumbs)))
+@section('breadcrumb')
+    <x-admin.breadcrumb :breadcrumbs="$breadcrumbs"/>
+@endsection
 @section('content')
     <div class="content-body">
 
@@ -97,7 +101,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
