@@ -94,4 +94,15 @@ class Post extends Model
     }
 
 
+    /**
+     * Return comments of posts.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
 }
