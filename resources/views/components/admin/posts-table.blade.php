@@ -44,12 +44,13 @@
                                 <a href="{{ route('admin.posts.status',$post->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Enable') }}"><span class="badge badge-pill badge-success"><i data-feather='check'></i></span></a>
                             @endif
                             <a href="{{ route('admin.posts.edit',$post->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Edit') }}"><span class="badge badge-pill badge-secondary"><i data-feather="edit"></i></span></a>
+                            <a href="{{ route('admin.posts.show',$post->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('View') }}"><span class="badge badge-pill badge-info"><i data-feather='external-link'></i></span></a>
+                            <a href="{{ route('admin.posts.comments',$post->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Comments') }}"><span class="badge badge-pill badge-primary"><i data-feather='message-square'></i></span></a>
                         @else
                             <a href="{{ route('admin.posts.restore',$post->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Restore') }}"><span class="badge badge-pill badge-success"><i data-feather='check'></i></span></a>
                         @endif
                         @csrf
                         @method('DELETE')
-                        <a href="{{ route('admin.posts.show',$post->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('View') }}"><span class="badge badge-pill badge-info"><i data-feather='external-link'></i></span></a>
                         <a href="{{ route($type=='posts'?'admin.posts.destroy' : 'admin.posts.delete',$post->id) }}" onclick="destroyPost({{ $post->id }})" data-toggle="tooltip" data-placement="top" title="{{ __('Delete') }}"><span class="badge badge-pill badge-danger"><i data-feather="trash-2"></i></span></a>
                     </form>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddPostRequest;
 use App\Http\Requests\Admin\UpdatePostRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -102,6 +103,28 @@ class PostController extends Controller
     public function show($id)
     {
         //
+    }
+
+    /**
+     * Display the specified post.
+     *
+     * @param Request $request
+     * @param Post $post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    public function comments(Request $request, Post $post)
+    {
+        $breadcrumbs = $breadcrumbs = array_merge($this->breadcrumbs, [$post->title => '']);
+        $query = $post->comments()->latest()->with(['user', 'replies', 'post'])->withCount('replies');
+        if (isset($request->approved)) {
+            if ($request->approved == 1) {
+                $query->where('is_approved', 1);
+            } elseif ($request->approved == 0) {
+                $query->where('is_approved', 0);
+            }
+        }
+        $comments = $query->paginate(15);
+        return view('admin.posts.post-comments', compact(['breadcrumbs', 'comments', 'post']));
     }
 
     /**

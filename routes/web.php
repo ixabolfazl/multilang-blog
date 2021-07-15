@@ -55,6 +55,7 @@ Route::localized(function () {
             Route::get('trash', [PostController::class, 'trash'])->name('trash');
             Route::delete('{id}/delete', [PostController::class, 'delete'])->name('delete');
             Route::get('{id}/restore', [PostController::class, 'restore'])->name('restore');
+            Route::get('{post}/comments', [PostController::class, 'comments'])->name('comments');
         });
         Route::resource('posts', PostController::class);
 
