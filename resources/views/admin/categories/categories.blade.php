@@ -16,7 +16,7 @@
 @section('content')
     <div class="content-body">
         <div class="row">
-            <div class="col-8">
+            <div class="col-sm-8">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">{{__('Categories')}}</h4>
@@ -75,7 +75,7 @@
                     {{ $categories->links('admin.layouts.pagination') }}
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">{{__('New Category')}}</h4>
@@ -89,7 +89,7 @@
                             <div class="col-12 mb-1">
                                 <x-admin.input name="slug" :label="__('Slug')" tabindex="2"/>
                             </div>
-                            <div class="col12">
+                            <div class="col-12">
                                 <ul class="nav nav-tabs" role="tablist">
                                     @foreach(config('translatable.locales') as $local)
                                         <li class="nav-item">
