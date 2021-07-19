@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -20,6 +21,17 @@ class UserController extends Controller
         'Users' => 'admin.users.index',
     ];
 
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     /**
      * Display a listing of the Users.
      *
@@ -28,7 +40,7 @@ class UserController extends Controller
     public function index()
     {
         $breadcrumbs = $this->breadcrumbs;
-        $users = User::orderBy('id', 'DESC')->paginate(15);
+        $users = User::latest()->paginate(15);
         return view('admin.users.users', compact(['breadcrumbs', 'users']));
     }
 
@@ -39,6 +51,7 @@ class UserController extends Controller
      */
     public function trash()
     {
+        Gate::authorize('trash', User::class);
         $breadcrumbs = array_merge($this->breadcrumbs, ['Deleted Users' => 'admin.users.trash']);
         $users = User::onlyTrashed()->paginate(15);
         return view('admin.users.deleted', compact(['breadcrumbs', 'users']));
@@ -173,6 +186,7 @@ class UserController extends Controller
     public function delete($id)
     {
         $user = User::withTrashed()->findOrFail($id);
+        Gate::authorize('forceDelete', $user);
         if (File::exists(public_path($user->image))) {
             File::delete(public_path($user->image));
         }
@@ -189,7 +203,9 @@ class UserController extends Controller
 
     public function restore($id)
     {
+
         $user = User::withTrashed()->findOrFail($id);
+        Gate::authorize('restore', $user);
         $user->restore();
         return redirect()->back()->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('restored')]));
     }
@@ -203,6 +219,7 @@ class UserController extends Controller
 
     public function changeStatus(User $user)
     {
+        Gate::authorize('status', User::class);
         $status = $user->status == 'Enable' ? 'Disable' : 'Enable';
 
         $user->update(['status' => $status]);
@@ -222,6 +239,7 @@ class UserController extends Controller
 
     public function removeImage(User $user)
     {
+        Gate::authorize('removeImage', $user);
         if ($user->image != Null && File::exists(public_path($user->image))) {
             File::delete(public_path($user->image));
             $user->update(['image' => Null]);
