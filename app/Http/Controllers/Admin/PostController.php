@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddPostRequest;
 use App\Http\Requests\Admin\UpdatePostRequest;
 use App\Models\Category;
-use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -22,6 +22,16 @@ class PostController extends Controller
     ];
 
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
+    /**
      * Display a listing of the post.
      *
      * @param Request $request
@@ -30,9 +40,13 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $breadcrumbs = $this->breadcrumbs;
-        $postsQuery = Post::orderBy('id', 'DESC')->with(['user', 'categories']);
+        $user = auth()->user();
+        $postsQuery = Post::latest()->with(['user', 'categories']);
         if (isset($request->search)) {
             $postsQuery->whereTranslationLike('title', "%{$request->search}%");
+        }
+        if ($user->role == "Author") {
+            $postsQuery->where('user_id', $user->id);
         }
         $posts = $postsQuery->paginate(15);
         return view('admin.posts.posts', compact(['breadcrumbs', 'posts']));
@@ -45,8 +59,10 @@ class PostController extends Controller
      */
     public function trash()
     {
+        Gate::authorize('trash', Post::class);
         $breadcrumbs = array_merge($this->breadcrumbs, ['Deleted Posts' => 'admin.posts.trash']);
-        $posts = Post::onlyTrashed()->orderBy('deleted_at', 'desc')->with(['user', 'categories'])->paginate(15);
+        $posts = Post::onlyTrashed()->orderBy('deleted_at', 'desc')
+            ->with(['user', 'categories'])->where('user_id', auth()->user()->id)->paginate(15);
         return view('admin.posts.deleted-post', compact(['breadcrumbs', 'posts']));
 
     }
@@ -59,7 +75,7 @@ class PostController extends Controller
     public function create()
     {
         $breadcrumbs = $breadcrumbs = array_merge($this->breadcrumbs, ['New Post' => 'admin.posts.create']);
-        $categories = Category::orderBy('id', 'DESC')->where('status', 'enable')->get();
+        $categories = Category::latest()->where('status', 'enable')->get();
         return view('admin.posts.new-post', compact(['breadcrumbs', 'categories']));
     }
 
@@ -114,6 +130,7 @@ class PostController extends Controller
      */
     public function comments(Request $request, Post $post)
     {
+        Gate::authorize('forceDelete', $post);
         $breadcrumbs = $breadcrumbs = array_merge($this->breadcrumbs, [$post->title => '']);
         $query = $post->comments()->latest()->with(['user', 'replies', 'post'])->withCount('replies');
         if (isset($request->approved)) {
@@ -136,7 +153,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $breadcrumbs = $breadcrumbs = array_merge($this->breadcrumbs, ['Edit Post' => 'admin.posts.create']);
-        $categories = Category::orderBy('id', 'DESC')->active()->get();
+        $categories = Category::latest()->active()->get();
         $postCategories = $post->categories()->get()->pluck('id')->toArray();
         return view('admin.posts.edit-post', compact(['post', 'breadcrumbs', 'categories', 'postCategories']));
     }
@@ -199,6 +216,7 @@ class PostController extends Controller
     public function delete($id)
     {
         $post = Post::withTrashed()->findOrFail($id);
+        Gate::authorize('forceDelete', $post);
         //remove image
         if (File::exists(public_path($post->image))) {
             File::delete(public_path($post->image));
@@ -216,8 +234,9 @@ class PostController extends Controller
 
     public function restore($id)
     {
-        $user = Post::withTrashed()->findOrFail($id);
-        $user->restore();
+        $post = Post::withTrashed()->findOrFail($id);
+        Gate::authorize('restore', $post);
+        $post->restore();
         return redirect()->back()->with('status', __('The post was :atrribute successfully!', ['atrribute' => __('restored')]));
     }
 
@@ -230,6 +249,8 @@ class PostController extends Controller
 
     public function changeStatus(Post $post)
     {
+        Gate::authorize('status', $post);
+
         $status = $post->status == 'Enable' ? 'Disable' : 'Enable';
 
         $post->update(['status' => $status]);
@@ -248,6 +269,7 @@ class PostController extends Controller
      */
     public function upload(Request $request)
     {
+        Gate::authorize('upload', Post::class);
         $validator = Validator::make($request->all(), ['upload' => 'image|max:1024',], [], ['upload' => __('Image')]);
 
         if ($validator->fails()) {
