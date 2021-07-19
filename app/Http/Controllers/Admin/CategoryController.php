@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -16,6 +17,17 @@ class CategoryController extends Controller
         'Categories' => 'admin.categories.index',
     ];
 
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class, 'category');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +36,7 @@ class CategoryController extends Controller
     public function index()
     {
         $breadcrumbs = $this->breadcrumbs;
-        $categories = Category::orderBy('id', 'DESC')->with('parent')->paginate(15);
+        $categories = Category::latest()->with('parent')->paginate(15);
         $parents = Category::all();
         return view('admin.categories.categories', compact(['breadcrumbs', 'categories', 'parents']));
     }
@@ -36,7 +48,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        abort(404);
+
     }
 
     /**
@@ -47,7 +59,6 @@ class CategoryController extends Controller
      */
     public function store(AddCategoryReqest $request)
     {
-
         // remove null fields in languages
         $request = $this->removeNullFields($request);
         Category::create($request->all());
@@ -121,6 +132,8 @@ class CategoryController extends Controller
 
     public function changeStatus(Category $category)
     {
+        Gate::authorize('status', $category);
+
         $status = $category->status == 'Enable' ? 'Disable' : 'Enable';
 
         $category->update(['status' => $status]);
