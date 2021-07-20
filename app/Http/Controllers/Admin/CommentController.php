@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -15,8 +16,19 @@ class CommentController extends Controller
     ];
 
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Comment::class, 'comment');
+    }
+
+    /**
      * Display a listing of the comments.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -30,20 +42,27 @@ class CommentController extends Controller
                 $query->where('is_approved', 0);
             }
         }
+        if(auth()->user()->role=="Author"){
+            $query->whereHas('post', function($query){
+                return $query->where('user_id',auth()->user()->id);
+            });
+
+        }
         $comments = $query->paginate(15);
         return view('admin.comments.comments', compact(['breadcrumbs', 'comments']));
     }
 
 
     /**
-     * Store a newly created comment in storage.
+     * Store a replay for comment in storage.
      *
      * @param Request $request
      * @param Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Comment $comment)
+    public function replay(Request $request, Comment $comment)
     {
+        Gate::authorize('status', $comment);
         $request->validate([
             'comment' => 'required|string',
         ]);
@@ -122,6 +141,8 @@ class CommentController extends Controller
      */
     public function changeStatus(Comment $comment)
     {
+        Gate::authorize('status', $comment);
+
         $status = !$comment->is_approved;
 
         $comment->update(['is_approved' => $status]);
