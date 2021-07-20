@@ -7,13 +7,14 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
+        Gate::authorize('viewAny', 'dashboard');
         $breadcrumbs = ['Dashboard' => ''];
         $users = User::latest()->take(5)->get();
         $users_count = User::count();
