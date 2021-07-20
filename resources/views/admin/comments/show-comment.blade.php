@@ -63,7 +63,7 @@
                         </div>
                         <p class="card-text">{{ $comment->comment }} </p>
                         <hr>
-                        <form action="{{ route('admin.comments.store',$comment->id) }}" method="post">
+                        <form action="{{ route('admin.comments.replay',$comment->id) }}" method="post">
                             @csrf
                             <x-admin.textarea name="comment" :label="__('Replay')" tabindex="1" rows="3"/>
                             <input type="submit" class="btn btn-sm btn-primary" value="{{ __('Replay') }}">

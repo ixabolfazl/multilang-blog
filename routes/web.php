@@ -72,7 +72,7 @@ Route::localized(function () {
 
         Route::group(['as' => 'comments.', 'prefix' => 'comments'], function () {
             Route::get('{comment}/status', [CommentController::class, 'changeStatus'])->name('status');
-            Route::post('/{comment}', [CommentController::class, 'store'])->name('store');
+            Route::post('/{comment}', [CommentController::class, 'replay'])->name('replay');
         });
         Route::resource('comments', CommentController::class)->except(['create', 'store']);
 
