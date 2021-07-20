@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -24,6 +25,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', 'profile');
         $user = auth()->user();
         $breadcrumbs = $this->breadcrumbs;
         return view('admin.users.profile', compact(['user', 'breadcrumbs']));
@@ -39,6 +41,7 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
+        Gate::authorize('update', 'profile');
         $user = auth()->user();
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             //upload new image
