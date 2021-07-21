@@ -23,6 +23,7 @@ class CreatePostsTable extends Migration
                 ->on('users')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
+            $table->int('view')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

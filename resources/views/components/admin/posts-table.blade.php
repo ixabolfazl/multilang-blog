@@ -10,6 +10,7 @@
             <th>{{__('Author')}}</th>
             <th>{{__('Date')}}</th>
             <th>{{__('Status')}}</th>
+            <th>{{__('Views')}}</th>
             <th>{{__('Actions')}}</th>
         </tr>
         </thead>
@@ -34,6 +35,9 @@
                 <td>{{  $post->date }}</td>
                 <td>
                     <span class="badge badge-pill badge-{{ $post->status=='Enable' ? 'success' : 'danger'}} mr-1">{{ __($post->status) }}</span>
+                </td>
+                <td>
+                    {{ $post->view }}
                 </td>
                 <td>
                     <form action="{{ route($type=='posts'?'admin.posts.destroy' : 'admin.posts.delete',$post->id) }}" id="destroy-post-{{$post->id}}" method="post">
