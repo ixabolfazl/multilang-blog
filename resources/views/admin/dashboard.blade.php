@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                     <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">1200k</h4>
+                                        <h4 class="font-weight-bolder mb-0">{{ $views }}</h4>
                                         <p class="card-text text-dark font-small-3 mb-0">{{__('Views')}}</p>
                                     </div>
                                 </div>
@@ -119,7 +119,18 @@
                 </div>
             </div>
         </div>
-
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{__('Most Views')}}</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <x-admin.posts-table :posts="$posts_orderby_views"/>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row match-height">
             <div class="col-md-12">
                 <div class="card">
@@ -127,7 +138,7 @@
                         <h4 class="card-title">{{__('Last Posts')}}</h4>
                     </div>
                     <div class="table-responsive">
-                        <x-admin.posts-table :posts="$posts"/>
+                        <x-admin.posts-table :posts="$last_posts"/>
                     </div>
                 </div>
             </div>
