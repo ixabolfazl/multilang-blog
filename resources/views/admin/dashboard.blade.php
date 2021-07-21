@@ -14,7 +14,6 @@
 @endsection
 @section('content')
     <div class="content-body">
-
         <div class="row match-height">
             <div class="col-xl-12 col-md-6 col-12">
                 <div class="card card-statistics">
@@ -23,20 +22,22 @@
                     </div>
                     <div class="card-body statistics-body">
                         <div class="row">
-                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-primary mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="file-text" class="avatar-icon"></i>
+                            <div class="col-xl col-sm-6 col-12 mb-2 mb-xl-0">
+                                <a href="{{ route('admin.posts.index') }}">
+                                    <div class="media">
+                                        <div class="avatar bg-light-primary mr-2">
+                                            <div class="avatar-content">
+                                                <i data-feather="file-text" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body my-auto">
+                                            <h4 class="font-weight-bolder mb-0">{{ $posts_count }}</h4>
+                                            <p class="card-text text-dark font-small-3 mb-0">{{__('Posts')}}</p>
                                         </div>
                                     </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">{{ $posts_count }}</h4>
-                                        <p class="card-text font-small-3 mb-0">{{__('Posts')}}</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
-                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
+                            <div class="col-xl col-sm-6 col-12 mb-2 mb-xl-0">
                                 <div class="media">
                                     <div class="avatar bg-light-info mr-2">
                                         <div class="avatar-content">
@@ -45,61 +46,73 @@
                                     </div>
                                     <div class="media-body my-auto">
                                         <h4 class="font-weight-bolder mb-0">1200k</h4>
-                                        <p class="card-text font-small-3 mb-0">{{__('Views')}}</p>
+                                        <p class="card-text text-dark font-small-3 mb-0">{{__('Views')}}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-danger mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="message-square" class="avatar-icon"></i>
+                            <div class="col-xl col-sm-6 col-12 mb-2 mb-xl-0">
+                                <a href="{{ route('admin.comments.index') }}">
+                                    <div class="media">
+                                        <div class="avatar bg-light-danger mr-2">
+                                            <div class="avatar-content">
+                                                <i data-feather="message-square" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body my-auto">
+                                            <h4 class="font-weight-bolder mb-0">{{ $comments_count }}</h4>
+                                            <p class="card-text text-dark font-small-3 mb-0">{{__('Comments')}}</p>
                                         </div>
                                     </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">{{ $comments_count }}</h4>
-                                        <p class="card-text font-small-3 mb-0">{{__('Comments')}}</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
-                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-xl-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-warning mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="avatar-icon"></i>
+                            @can('viewAny', App\Models\User::class)
+                                <div class="col-xl col-sm-6 col-12 mb-2 mb-xl-0">
+                                    <a href="{{ route('admin.users.index') }}">
+                                        <div class="media">
+                                            <div class="avatar bg-light-warning mr-2">
+                                                <div class="avatar-content">
+                                                    <i data-feather="users" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="media-body my-auto">
+                                                <h4 class="font-weight-bolder mb-0">{{ $users_count }}</h4>
+                                                <p class="card-text text-dark font-small-3 mb-0">{{__('Users')}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                            @can('viewAny', App\Models\Category::class)
+                                <div class="col-xl col-sm-6 col-12 mb-2 mb-sm-0">
+                                    <a href="{{ route('admin.categories.index') }}">
+                                        <div class="media">
+                                            <div class="avatar bg-light-success mr-2">
+                                                <div class="avatar-content">
+                                                    <i data-feather="layers" class="avatar-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="media-body my-auto">
+                                                <h4 class="font-weight-bolder mb-0">{{ $category_count }}</h4>
+                                                <p class="card-text text-dark font-small-3 mb-0">{{__('Categories')}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                            <div class="col-xl col-sm-6 col-12 mb-2 mb-sm-0">
+                                <a href="{{ route('admin.posts.trash') }}">
+                                    <div class="media">
+                                        <div class="avatar bg-light-secondary mr-2">
+                                            <div class="avatar-content">
+                                                <i data-feather="trash" class="avatar-icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body my-auto">
+                                            <h4 class="font-weight-bolder mb-0">{{$deleted_posts_count}}</h4>
+                                            <p class="card-text text-dark font-small-3 mb-0">{{__('Deleted Posts')}}</p>
                                         </div>
                                     </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">{{ $users_count }}</h4>
-                                        <p class="card-text font-small-3 mb-0">{{__('Users')}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-sm-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-success mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="layers" class="avatar-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">{{ $category_count }}</h4>
-                                        <p class="card-text font-small-3 mb-0">{{__('Categories')}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-sm-6 col-12 mb-2 mb-sm-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-secondary mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="trash" class="avatar-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">{{$deleted_posts_count}}</h4>
-                                        <p class="card-text font-small-3 mb-0">{{__('Deleted Posts')}}</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -131,17 +144,18 @@
                 </div>
             </div>
         </div>
-        <div class="row match-height">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">{{__('Last Users')}}</h4>
+        @can('viewAny', App\Models\User::class)
+            <div class="row match-height">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">{{__('Last Users')}}</h4>
+                        </div>
+                        <x-admin.users-table :users="$users"/>
                     </div>
-                    <x-admin.users-table :users="$users"/>
-
                 </div>
             </div>
-        </div>
+        @endcan
 
     </div>
 @endsection
