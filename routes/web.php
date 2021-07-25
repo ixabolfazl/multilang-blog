@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +76,10 @@ Route::localized(function () {
             Route::post('/{comment}', [CommentController::class, 'replay'])->name('replay');
         });
         Route::resource('comments', CommentController::class)->except(['create', 'store']);
+
+        Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
+        Route::put('setting', [SettingController::class, 'update'])->name('setting.update');
+
 
     });
 
