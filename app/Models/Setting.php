@@ -24,6 +24,6 @@ class Setting extends Model
 
     public function breaking_title_category()
     {
-        $this->hasOne(Category::class, 'breaking_title_category');
+        return $this->hasOne(Category::class, 'id', 'breaking_title_category');
     }
 }
