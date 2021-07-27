@@ -25,7 +25,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // settings
-        View::share('setting', Setting::where('lang', app()->getLocale())->with('breaking_title_category')->get());
+        $setting = Setting::all()->keyBy('lang');
+        View::share('setting', $setting);
     }
 }
