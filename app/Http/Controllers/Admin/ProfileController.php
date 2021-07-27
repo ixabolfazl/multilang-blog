@@ -60,7 +60,7 @@ class ProfileController extends Controller
             'password' => isset($request->password) ? bcrypt($request->password) : Null,
         ]));
         return redirect()->back()
-            ->with('status', __('The user was :atrribute successfully!', ['atrribute' => __('updated')]));
+            ->with('status', __('The profile was :atrribute successfully!', ['atrribute' => __('updated')]));
     }
 
 
