@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\File;
 
 class SettingController extends Controller
 {
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Setting::class, 'setting');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,10 +29,6 @@ class SettingController extends Controller
      */
     public function index()
     {
-//        $settings = Setting::all()->mapWithKeys(function ($item) {
-//            return [$item['key'] => $item['value']];
-//        });
-//        dd($settings->all());
         $breadcrumbs = ['Dashboard' => 'admin.dashboard', 'Setting' => '',];
         $categories = Category::all();
         return view('admin.setting', compact(['categories', 'breadcrumbs']));
