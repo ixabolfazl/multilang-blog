@@ -3,8 +3,8 @@
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto">
-                <a class="navbar-brand" href="#"> <span class="brand-logo">logo</span>
-                    <h2 class="brand-text">site name</h2>
+                <a class="navbar-brand" href="#">
+                    <h2 class="brand-text">{{ $setting[app()->getLocale()]->site_name }}</h2>
                 </a></li>
             <li class="nav-item nav-toggle">
                 <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
@@ -95,8 +95,12 @@
                         <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Profile')}}</span> </a>
                 </li>
             @endcan
-
-
+            @can('viewAny',App\Models\Setting::class)
+                <li class="nav-item {{ !request()->routeIs(app()->getLocale().'.admin.setting.index') ?: 'active'}}">
+                    <a class="d-flex align-items-center" href="{{ route('admin.setting.index') }}"><i data-feather='user'></i>
+                        <span class="menu-title text-truncate" data-i18n="Page Layouts">{{__('Setting')}}</span> </a>
+                </li>
+            @endcan
         </ul>
     </div>
 </div><!-- END: Main Menu-->
