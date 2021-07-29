@@ -29,7 +29,7 @@ Route::localized(function () {
 
     Route::get('/', function () {
         return view('app.index');
-    })->name('index');
+    })->name('home');
 
 
     Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
