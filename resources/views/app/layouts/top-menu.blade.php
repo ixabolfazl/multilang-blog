@@ -1,16 +1,6 @@
 <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
     <ul class="navbar-nav">
-        <li class="nav-item"><a href="index.htm#" class="nav-link active">صفحه اصلی</a>
-            <ul class="dropdown-menu">
-                <li class="nav-item"><a href="index.html" class="nav-link active">صفحه اصلی 1</a>
-                </li>
-                <li class="nav-item"><a href="index-2.html" class="nav-link">صفحه اصلی 2</a></li>
-                <li class="nav-item"><a href="index-3.html" class="nav-link">صفحه اصلی 3</a></li>
-                <li class="nav-item"><a href="index-4.html" class="nav-link">صفحه اصلی 4</a></li>
-                <li class="nav-item"><a href="index-5.html" class="nav-link">صفحه اصلی 5</a></li>
-                <li class="nav-item"><a href="index-6.html" class="nav-link">صفحه اصلی 6</a></li>
-                <li class="nav-item"><a href="index-7.html" class="nav-link">صفحه اصلی 7</a></li>
-            </ul>
+        <li class="nav-item"><a href="{{ route('home') }}" class="nav-link active">{{ __('Home') }}</a>
         </li>
         <li class="nav-item"><a href="post-category-2.html" class="nav-link">سبک زندگی</a></li>
         <li class="nav-item"><a href="post-category-3.html" class="nav-link">مسافرت</a></li>
@@ -53,38 +43,54 @@
         </li>
         @auth
             <li class="nav-item">
-                <a href="index.htm#" class="nav-link"><i class="icofont-user-alt-5"></i> {{ auth()->user()->name }}</a>
+                <a href="m#" class="nav-link"><i class="icofont-user-alt-5"></i> {{ auth()->user()->name }}</a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a href="gallery-1.html" class="nav-link">پروفایل</a>
-                    </li>
+                    @can('viewAny','dashboard')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link">{{ __('Dashboard') }}</a></li>
+                    @endcan
+                    @can('viewAny','profile')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.profile.index') }}" class="nav-link">{{ __('Profile') }}</a></li>
+                    @endcan
+                    @can('viewAny',App\Models\Setting::class)
+                        <li class="nav-item">
+                            <a href="{{ route('admin.setting.index') }}" class="nav-link">{{ __('Setting') }}</a></li>
+                    @endcan
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit()" class="nav-link">خروج</a>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit()" class="nav-link">{{__('Logout')}}</a>
                         </form>
-
                     </li>
                 </ul>
             </li>
         @endauth
         @guest
             <li class="nav-item">
-                <a href="{{ route('register') }}" class="nav-link"><i class="icofont-user-alt-5"></i> ثبت نام</a>
+                <a href="{{ route('register') }}" class="nav-link"><i class="icofont-user-alt-5"></i>{{__('Register')}}
+                </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('login') }}" class="nav-link"><i class="icofont-user-alt-5"></i> ورود</a>
+                <a href="{{ route('login') }}" class="nav-link"><i class="icofont-user-alt-5"></i> {{__('Login')}}</a>
             </li>
         @endguest
+        <li class="nav-item">
+            <a href="#" class="nav-link"><img src="{{  asset("assets/app/img/flag/".app()->getLocale().".png")  }}" alt="{{ app()->getLocale() }}-flag"> {{  __(app()->getLocale())  }}
+            </a>
+            <ul class="dropdown-menu">
+                @foreach(config('translatable.locales') as $local)
+                    <li class="nav-item"><a href="{{ Route::localizedUrl($local)}}" class="nav-link">
+                            <img src="{{  asset("assets/app/img/flag/".$local.".png")  }}" alt="{{ $local }}-flag">
+                            {{ __($local) }}</a></li>
+                @endforeach
+            </ul>
+        </li>
 
 
     </ul>
     <div class="others-options">
         <ul>
-            <li class="nav-item text-danger">
-                <a href="{{ Route::localizedUrl(app()->getLocale()=='fa'? 'en' :'fa') }}" title="{{ app()->getLocale()=='fa' ? 'فارسی' :'English' }}" class="nav-link">
-                    <img src="{{ app()->getLocale()=='en' ? asset('assets/app/img/flag/us.png') :asset('assets/app/img/flag/ir.png') }}" alt="{{ app()->getLocale()=='en' ? 'en' :'fa' }}-flag"></a>
-            </li>
-
             <li class="header-search">
                 <div class="nav-search">
                     <div class="nav-search-button">
