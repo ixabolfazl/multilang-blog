@@ -19,8 +19,8 @@ class CreateSettingsTable extends Migration
             $table->string('site_name');
             $table->string('description');
             $table->string('logo_url');
-            $table->unsignedBigInteger('breaking_title_category');
-            $table->foreign('breaking_title_category')->references('id')->on('categories');
+            $table->unsignedBigInteger('breaking_title_category')->nullable();
+            $table->foreign('breaking_title_category')->references('id')->on('categories')->onDelete('set null');
             $table->string('address');
             $table->string('phone_number');
             $table->string('email');
