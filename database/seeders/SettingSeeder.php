@@ -27,7 +27,7 @@ class SettingSeeder extends Seeder
                 'lang' => $locale,
                 'site_name' => $faker->title,
                 'description' => $faker->text,
-                'logo_url' => 'assets/image/logo.png',
+                'logo_url' => 'assets/app/img/logo-' . $locale . '.png',
                 'breaking_title_category' => 1,
                 'address' => $faker->address,
                 'phone_number' => $faker->phoneNumber,
