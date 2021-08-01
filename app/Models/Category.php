@@ -59,11 +59,11 @@ class Category extends Model implements TranslatableContract
     }
 
     /**
-     * Return childs category.
+     * Return children category.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function childs()
+    public function children()
     {
         return $this->hasMany(Category::class);
     }
