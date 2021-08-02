@@ -17,9 +17,11 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->text('comment');
             $table->boolean('is_approved')->default(false);
+            $table->string('email')->nullable();
+            $table->string('name')->nullable();
             $table->foreignId('post_id')->constrained()->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreignId('user_id')->constrained()->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreignId('comment_id')->constrained()->onUpdate('CASCADE')->onDelete('CASCADE')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreignId('comment_id')->nullable()->constrained()->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
