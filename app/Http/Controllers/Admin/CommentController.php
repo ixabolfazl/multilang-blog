@@ -62,7 +62,7 @@ class CommentController extends Controller
      */
     public function replay(Request $request, Comment $comment)
     {
-        Gate::authorize('status', $comment);
+        Gate::authorize('replay', $comment);
         $request->validate([
             'comment' => 'required|string',
         ]);
