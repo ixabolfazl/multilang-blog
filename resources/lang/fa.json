@@ -54,6 +54,7 @@
     "Last Users": "آخرین کاربران",
     "Last Posts": "آخرین پست ها",
     "Last Comments": "آخرین نظرات",
+    "Leave a comment": "نظر بگذارید",
     "Logout": "خروج",
     "Logo": "لوگو",
     "Login": "لوگو",
@@ -68,6 +69,7 @@
     "Name": "نام",
     "name": "نام",
     "No parent": "بدون والد",
+    "Next post": "پست بعدی",
     "Not approved": "تایید نشده",
     "Not approved Comments": "نظرات تایید نشده",
     "Phone Number": "شماره موبایل",
@@ -76,6 +78,7 @@
     "post": "پست",
     "Posts": "پست ها",
     "Profile": "حساب کاربری",
+    "Previous post": "پست قبلی",
     "Parent": "والد",
     "Parent Category": "دسته بندی والد",
     "Restore": "بازگرداندن",
@@ -88,6 +91,7 @@
     "Success": "موفق",
     "Statistics": "آمار",
     "Setting": "تنظیمات",
+    "Send": "ارسال",
     "Seo": "سئو",
     "Slug": "نامک",
     "Search": "جست وجو",
@@ -122,5 +126,6 @@
     "View & Reply": "نمایش و پاسخ",
     "Yes, delete it!": "بله، آن را حذف کن!",
     "You can restore it later!": "شما میتوانید بعدا آن را بازیابی کنید!",
-    "You wont be able to revert this!": "شما نمیتوانید بعدا آن را بازیابی کنید!"
+    "You wont be able to revert this!": "شما نمیتوانید بعدا آن را بازیابی کنید!",
+    "Your email address will not be published.": "آدرس ایمیل شما منتشر نخواهد شد."
 }
