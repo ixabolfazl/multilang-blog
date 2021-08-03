@@ -23,7 +23,7 @@
                                 <li><i class="icofont-calendar"></i>{{$post->date}}</li>
                             </ul>
                             <ul class="category mb-4">
-                                <li><span>{{('Categories')}}:</span></li>
+                                <li><span>{{__('Categories')}}:</span></li>
                                 @foreach($post->categories as $category)
                                     <li><a href="{{ route('category.show',$category->slug) }}">{{ $category->name }}</a>
                                     </li>
