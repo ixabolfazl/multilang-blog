@@ -7,6 +7,10 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\App\AddCommentController;
+use App\Http\Controllers\App\ShowCategoryController;
+use App\Http\Controllers\App\ShowPostController;
+use App\Http\Controllers\App\ShowUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +34,11 @@ Route::localized(function () {
     Route::get('/', function () {
         return view('app.index');
     })->name('home');
+
+    Route::get('/post/{post:slug}', [ShowPostController::class, 'show'])->name('post.show');
+    Route::get('/category/{category:slug}', [ShowCategoryController::class, 'show'])->name('category.show');
+    Route::get('/user/{user}', [ShowUserController::class, 'show'])->name('user.show');
+    Route::put('/comment/{post}', [AddCommentController::class, 'store'])->name('comment.store');
 
 
     Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
@@ -84,7 +93,7 @@ Route::localized(function () {
     });
 
 
-    Route::get('/user/{user}', function ($user) {
+    Route::get('/x/{user}', function ($user) {
 
         auth()->loginUsingId($user);
 
