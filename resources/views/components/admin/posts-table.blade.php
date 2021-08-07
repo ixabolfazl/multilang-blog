@@ -21,8 +21,8 @@
                 <td>
                     <div class="avatar"><img src="{{ asset($post->image) }}" alt="avatar" width="32" height="32"></div>
                 </td>
-                <td>{{ $post->title }}</td>
-                <td>{{ $post->description }}</td>
+                <td>{{ Str::limit($post->title, 50) }}</td>
+                <td>{{ Str::limit($post->description, 50) }}</td>
                 <td>
                     @foreach($post->categories as $category)
                         <a href="{{ route('admin.categories.show',$category->id) }}">
@@ -30,7 +30,8 @@
                         </a>
                     @endforeach
                 </td>
-                <td><a href="{{ route('admin.users.show',$post->user->id) }}">{{ $post->author }}</a></td>
+                <td><a href="{{ route('admin.users.show',$post->user->id) }}">{{Str::limit($post->author, 50) }}</a>
+                </td>
 
                 <td>{{  $post->date }}</td>
                 <td>

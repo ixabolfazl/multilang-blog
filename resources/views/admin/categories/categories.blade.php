@@ -38,11 +38,11 @@
                                 <tr>
                                     <td>{{ $loop->index+1 }}</td>
                                     <td>
-                                        <a href="{{ route('admin.categories.show',$category->id) }}">{{ $category->name }}</a>
+                                        <a href="{{ route('admin.categories.show',$category->id) }}">{{ Str::limit($category->parent_name, 50)  }}</a>
                                     </td>
                                     <td>
                                         @unless($category->category_id ==null)
-                                            <a href="{{ route('admin.categories.show',$category->category_id) }}">{{ $category->parent_name }}</a>
+                                            <a href="{{ route('admin.categories.show',$category->category_id) }}">{{ Str::limit($category->parent_name, 50)  }}</a>
                                         @else
                                             {{__('No parent')}}
                                         @endif

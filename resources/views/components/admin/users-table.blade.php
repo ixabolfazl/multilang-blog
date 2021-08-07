@@ -31,9 +31,9 @@
                 </th>
                 <td>
                     @if($user->role == 'Admin' || $user->role=="Author")
-                        <a href="{{ route('admin.users.show',$user->id) }}">{{ $user->name }}</a>
+                        <a href="{{ route('admin.users.show',$user->id) }}">{{ Str::limit($user->name, 50) }}</a>
                     @else
-                        {{ $user->name }}
+                        {{ Str::limit($user->name, 50) }}
                     @endif
 
                 </td>
