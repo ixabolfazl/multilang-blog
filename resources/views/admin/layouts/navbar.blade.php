@@ -35,8 +35,10 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
                     <a class="dropdown-item" href="{{ route('admin.profile.index') }}"><i class="mr-50" data-feather="user"></i> {{__('Profile')}}
                     </a>
-                    <a class="dropdown-item" href="page-account-settings.html"><i class="mr-50" data-feather="settings"></i> {{__('Settings')}}
-                    </a>
+                    @can('viewAny',App\Models\Setting::class)
+                        <a class="dropdown-item" href="{{ route('admin.setting.index') }}"><i class="mr-50" data-feather="settings"></i> {{__('Setting')}}
+                        </a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
