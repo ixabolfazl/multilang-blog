@@ -44,6 +44,9 @@
                                                     <x-admin.textarea name="{{$local}}[description]" :label="__('Description').' '.__('(:first until :second character)',['first'=> 100,'second'=>200])" tabindex="6" rows="2" :local="$local" :value="$setting[$local]->description"/>
                                                 </div>
                                                 <div class="col-12 mb-1">
+                                                    <x-admin.textarea name="{{$local}}[about]" :label="__('About')" tabindex="6" rows="2" :local="$local" :value="$setting[$local]->about"/>
+                                                </div>
+                                                <div class="col-12 mb-1">
                                                     <div class="row">
 
                                                         <div class="col-6 mb-1">
