@@ -18,6 +18,10 @@ class ShowUserController extends Controller
      */
     public function show(User $user)
     {
+        //check enabled
+        if ($user->status == 'Disable') {
+            abort(404);
+        }
 
         $posts = $user->posts()->active()->latest()->paginate(10);
         //breadcrumb

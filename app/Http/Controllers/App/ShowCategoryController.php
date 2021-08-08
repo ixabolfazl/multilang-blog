@@ -18,6 +18,12 @@ class ShowCategoryController extends Controller
      */
     public function show(Category $category)
     {
+
+        //check enabled
+        if ($category->status == 'Disable') {
+            abort(404);
+        }
+
         $topPosts = $category->posts()->active()->orderBy('view', 'desc')->limit(5)->get();
         $breadcrumbs = [__('Categories') => 'home', $category->name => ''];
         $posts = $category->posts()->active()->latest()->paginate(10);
