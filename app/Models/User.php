@@ -49,4 +49,15 @@ class User extends Authenticatable
     {
         return is_null($value) ? null : 'uploads/profile/' . $value;
     }
+
+
+    /**
+     * Return posts of user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
