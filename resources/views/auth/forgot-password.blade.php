@@ -1,4 +1,4 @@
-@extends('auth.layouts.app')
+@extends('auth.layouts.app')@section('title',__('Forgot Password'))
 @section('content')
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -15,20 +15,20 @@
                                         <div class="alert-body">{{ Session::get('status') }}</div>
                                     </div>
                                 @endif
-
                                 <a href="javascript:void(0);" class="brand-logo">
-                                    <h2 class="brand-text text-primary ml-1">Vuexy</h2>
+                                    <h2 class="brand-text text-primary ml-1">{{ $setting[app()->getLocale()]->site_name }}</h2>
                                 </a>
-                                <h4 class="card-title mb-1">Forgot Password? 🔒</h4>
-                                <p class="card-text mb-2">Enter your email and we'll send you instructions to reset your password</p>
+                                <h4 class="card-title mb-1">{{ __('Forgot Password') }} 🔒</h4>
+                                <p class="card-text mb-2">{{__("Enter your email and we'll send you instructions to reset your password")}}</p>
                                 <form class="auth-forgot-password-form mt-2" action="{{ route('password.email') }}" method="POST">
                                     @csrf
-                                    <x-admin.input name="email" label="Email" placeholder="Email" tabindex="1"/>
-                                    <button class="btn btn-primary btn-block" tabindex="2">Send reset link</button>
+                                    <x-admin.input name="email" :label="__('Email')" :placeholder="__('Email')" tabindex="1"/>
+                                    <button class="btn btn-primary btn-block" tabindex="2">{{__('Send reset link')}}</button>
                                 </form>
 
                                 <p class="text-center mt-2">
-                                    <a href="{{ route('login') }}"> <i data-feather="chevron-left"></i> Back to login
+                                    <a href="{{ route('login') }}">
+                                        <i data-feather="chevron-left"></i> {{ __('Login') }}
                                     </a>
                                 </p>
                             </div>
@@ -38,7 +38,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('page-script')
-    <script src="{{ asset('assets/admin/js/scripts/pages/page-auth-forgot-password.js') }}"></script>
 @endsection

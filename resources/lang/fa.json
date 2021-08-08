@@ -82,6 +82,7 @@
     "Previous post": "پست قبلی",
     "Parent": "والد",
     "Parent Category": "دسته بندی والد",
+    "Resest Password": "بازیابی گذرواژه",
     "Restore": "بازگرداندن",
     "Replies": "پاسخ ها",
     "Read more": "ادامه خواندن",
@@ -131,5 +132,16 @@
     "You can restore it later!": "شما میتوانید بعدا آن را بازیابی کنید!",
     "You must be logged in to leave a comment!": "برای ثبت نظر باید وارد شوید!",
     "You wont be able to revert this!": "شما نمیتوانید بعدا آن را بازیابی کنید!",
-    "Your email address will not be published.": "آدرس ایمیل شما منتشر نخواهد شد."
+    "Your new password must be different from previously used passwords!": "گذرواژه جدید شما باید متفاوت از گذرواژه قبلی باشد!",
+    "Your email address will not be published.": "آدرس ایمیل شما منتشر نخواهد شد.",
+    "Set New Password": "تنظیم گذرواژه جدید",
+    "Enter your email and we'll send you instructions to reset your password": "ایمیل خود را وارد کنید تا لینک بازنشانی گذرواژه برای شما ارسال شود",
+    "Send reset link": "ارسال لینک",
+    "Remember Me": "مرا به خاطر بسپار",
+    "Create an account": "ساخت اکانت جدید",
+    "Are you a new user?": "کاربر جدید هستید؟",
+    "Email Or Phone": "ایمیل یا شماره موبایل",
+    "Confirm Password": "تایید رمز عبور",
+    "Already have an account?": "از قبل حساب کاربری دارید؟",
+    "Forgot Password": "فراموشی گذرواژه"
 }
