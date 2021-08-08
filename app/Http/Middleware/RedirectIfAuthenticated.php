@@ -23,7 +23,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(route(RouteServiceProvider::HOME, [], true, app()->getLocale()));
+                $user = auth()->user();
+                return redirect(route($user->role == 'Admin' ? RouteServiceProvider::HOME : 'home', [], true, app()->getLocale()));
             }
         }
 
