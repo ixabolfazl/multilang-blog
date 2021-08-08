@@ -29,7 +29,7 @@ class ViewServiceProvider extends ServiceProvider
         $setting = Setting::with('breaking_title_category')->get()->keyBy('lang');
         View::share('setting', $setting);
         View::composer('app.layouts.app', function ($view) {
-            $view->with('categories', Category::with('children')->where('category_id', null)->get());
+            $view->with('categories', Category::active()->with('children')->where('category_id', null)->get());
         });
     }
 }
