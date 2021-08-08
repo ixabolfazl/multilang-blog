@@ -1,4 +1,4 @@
-@extends('app.layouts.app')@extends('app.layouts.app')@section('title',__('Home'))
+@extends('app.layouts.app')@section('title',__('Home'))
 @section('seo')
     {!! SEO::generate() !!}
 @endsection
