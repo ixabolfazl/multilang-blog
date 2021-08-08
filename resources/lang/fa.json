@@ -90,6 +90,7 @@
     "restored": "بازگردانده",
     "Role": "نقش",
     "Status": "وضعیت",
+    "submitted": "ثبت",
     "Success": "موفق",
     "Statistics": "آمار",
     "Setting": "تنظیمات",
@@ -128,6 +129,7 @@
     "View & Reply": "نمایش و پاسخ",
     "Yes, delete it!": "بله، آن را حذف کن!",
     "You can restore it later!": "شما میتوانید بعدا آن را بازیابی کنید!",
+    "You must be logged in to leave a comment!": "برای ثبت نظر باید وارد شوید!",
     "You wont be able to revert this!": "شما نمیتوانید بعدا آن را بازیابی کنید!",
     "Your email address will not be published.": "آدرس ایمیل شما منتشر نخواهد شد."
 }

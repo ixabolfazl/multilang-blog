@@ -1,3 +1,6 @@
+@section('page-style')
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css-rtl/plugins/extensions/ext-component-sweet-alerts.css") }}">
+@endsection
 @extends('app.layouts.app')@section('title',$post->title)
 @section('seo')
     {!! SEO::generate() !!}
@@ -17,8 +20,7 @@
                         <div class="article-content">
                             <h1>{{ $post->title }}</h1>
                             <ul class="entry-meta">
-                                <li><i class="icofont-user"></i>
-                                    <a href="{{ route('user.show',$post->user->id) }}">{{$post->user->name}}</a></li>
+                                <li><i class="icofont-user"></i> <a href="{{ route('user.show',$post->user->id) }}">{{$post->user->name}}</a></li>
                                 <li><i class="icofont-eye-alt"></i> {{$post->view}}</li>
                                 <li><i class="icofont-calendar"></i>{{$post->date}}</li>
                             </ul>
@@ -106,29 +108,27 @@
                             <form class="comment-form" action="{{ route('comment.store',$post->id) }}" method="post">
                                 @csrf
                                 @method('put')
+                                @auth
+
+                                    <p class="comment-form-comment">
+                                        <label for="comment">{{__('Comment')}}</label>
+                                        <textarea name="comment" id="comment" cols="45" rows="5" maxlength="65525" required="required"></textarea>
+                                    </p>
+                                    <p class="form-submit">
+                                        <input type="submit" name="submit" id="submit" class="submit" value="{{__('Send')}}">
+                                    </p>
+                                @endauth
                                 @guest
-                                    <p class="comment-notes">
-                                        <span id="email-notes">{{__('Your email address will not be published.')}}</span>
-                                        <span class="required">*</span>
-                                    </p>
+                                    <div class="comment-notes">
+                                        <div class="alert alert-primary" role="alert">
+                                            {{ __('You must be logged in to leave a comment!') }}
+                                            <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                                        </div>
+                                    </div>
+
+
                                 @endguest
-                                <p class="comment-form-comment">
-                                    <label for="comment">{{__('Comment')}}</label>
-                                    <textarea name="comment" id="comment" cols="45" rows="5" maxlength="65525" required="required"></textarea>
-                                </p>
-                                @guest
-                                    <p class="comment-form-author">
-                                        <label for="name">{{__('Name')}}<span class="required">*</span></label>
-                                        <input type="text" id="author" name="author" required="required">
-                                    </p>
-                                    <p class="comment-form-email">
-                                        <label for="email">{{__('Email')}}<span class="required">*</span></label>
-                                        <input type="email" id="email" name="email" required="required">
-                                    </p>
-                                @endguest
-                                <p class="form-submit">
-                                    <input type="submit" name="submit" id="submit" class="submit" value="{{__('Send')}}">
-                                </p>
+
                             </form>
                         </div>
                     </div>
@@ -136,4 +136,20 @@
             </div>
         </div>
     </section>
+@endsection
+@section('page-script')
+    <script src="{{ asset('assets/admin/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
+    @if(Session::has('status'))
+        <script>
+            $(window).on('load', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{__('Success')}}',
+                    text: '{{ Session::get('status') }}',
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
+            })
+        </script>
+    @endif
 @endsection
