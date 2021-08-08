@@ -28,7 +28,6 @@
                                 <th>{{__('ID')}}</th>
                                 <th>{{__('Category Name')}}</th>
                                 <th>{{__('Parent')}}</th>
-                                <th>{{__('Posts')}}</th>
                                 <th>{{__('Status')}}</th>
                                 <th>{{__('Actions')}}</th>
                             </tr>
@@ -46,9 +45,6 @@
                                         @else
                                             {{__('No parent')}}
                                         @endif
-                                    </td>
-                                    <td>
-                                        200
                                     </td>
                                     <td>
                                         <span class="badge badge-pill badge-{{ $category->status=='Enable' ? 'success' : 'danger'}} mr-1">{{ __($category->status) }}</span>
