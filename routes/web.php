@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\App\AddCommentController;
+use App\Http\Controllers\App\HomeController;
 use App\Http\Controllers\App\ShowCategoryController;
 use App\Http\Controllers\App\ShowPostController;
 use App\Http\Controllers\App\ShowUserController;
@@ -31,9 +32,7 @@ Route::localized(function () {
     require __DIR__ . '/auth.php';
 
 
-    Route::get('/', function () {
-        return view('app.index');
-    })->name('home');
+    Route::get('/', [HomeController::class, 'show'])->name('home');
 
     Route::get('/post/{post:slug}', [ShowPostController::class, 'show'])->name('post.show');
     Route::get('/category/{category:slug}', [ShowCategoryController::class, 'show'])->name('category.show');
@@ -91,13 +90,5 @@ Route::localized(function () {
 
 
     });
-
-
-    Route::get('/x/{user}', function ($user) {
-
-        auth()->loginUsingId($user);
-
-    });
-
 
 });
