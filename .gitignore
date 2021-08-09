@@ -12,8 +12,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea/*
-/public/assets/app/img/
-/public/assets/img/
-/public/assets/admin/images/
 /public/uploads/profile/
 /public/uploads/posts/
